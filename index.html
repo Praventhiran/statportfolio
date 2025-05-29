@@ -1,20 +1,112 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Coming Soon</title>
+  <meta charset="UTF-8">
+  <title>KY Portfolio — Coming Soon</title>
   <style>
     body {
-      font-family: sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background: #111;
+      background: #0e0e0e;
       color: white;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+      margin: 0;
+    }
+
+    canvas {
+      max-width: 90vw;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #ccc;
+      max-width: 600px;
+      text-align: center;
+      margin-top: 0.5rem;
     }
   </style>
 </head>
 <body>
-  <h1>Portfolio Coming Soon!</h1>
+  <h1>KY Portfolio: Stat System Coming Soon</h1>
+  <canvas id="radarChart" width="400" height="400"></canvas>
+  <p>This site will grow as I grow. Every skill I upload updates the chart.</p>
+
+  <script>
+    const canvas = document.getElementById("radarChart");
+    const ctx = canvas.getContext("2d");
+
+    const labels = ["3D", "Art", "Game Dev", "Animation", "Design"];
+    const stats = [50, 70, 65, 30, 90]; // 0-100
+
+    function drawRadarChart() {
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const radius = 150;
+      const total = labels.length;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw web
+      ctx.strokeStyle = "#444";
+      ctx.lineWidth = 1;
+      for (let layer = 1; layer <= 5; layer++) {
+        ctx.beginPath();
+        for (let i = 0; i < total; i++) {
+          const angle = (Math.PI * 2 / total) * i;
+          const x = centerX + Math.cos(angle) * (radius * layer / 5);
+          const y = centerY + Math.sin(angle) * (radius * layer / 5);
+          ctx.lineTo(x, y);
+        }
+        ctx.closePath();
+        ctx.stroke();
+      }
+
+      // Draw axes + labels
+      ctx.strokeStyle = "#666";
+      ctx.fillStyle = "#ccc";
+      for (let i = 0; i < total; i++) {
+        const angle = (Math.PI * 2 / total) * i;
+        const x = centerX + Math.cos(angle) * radius;
+        const y = centerY + Math.sin(angle) * radius;
+
+        // axis
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.lineTo(x, y);
+        ctx.stroke();
+
+        // label
+        ctx.fillText(labels[i], x * 1.08, y * 1.08);
+      }
+
+      // Draw data polygon
+      ctx.beginPath();
+      for (let i = 0; i < total; i++) {
+        const angle = (Math.PI * 2 / total) * i;
+        const value = stats[i] / 100;
+        const x = centerX + Math.cos(angle) * radius * value;
+        const y = centerY + Math.sin(angle) * radius * value;
+        ctx.lineTo(x, y);
+      }
+      ctx.closePath();
+      ctx.strokeStyle = "#00ffff";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.fillStyle = "rgba(0, 255, 255, 0.2)";
+      ctx.fill();
+    }
+
+    drawRadarChart();
+  </script>
 </body>
 </html>
