@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>KY Portfolio — Coming Soon</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     body {
       background: #0e0e0e;
@@ -51,6 +52,46 @@
       max-width: 720px;
       text-align: left;
     }
+
+    .contact {
+      margin-top: 3rem;
+      max-width: 720px;
+      background: #1a1a1a;
+      padding: 1rem 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.1);
+    }
+
+    .contact h2 {
+      margin-top: 0;
+    }
+
+    .contact ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .contact li {
+      margin: 0.5rem 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .contact i {
+      margin-right: 0.6rem;
+      color: #00ffff;
+      width: 20px;
+      text-align: center;
+    }
+
+    .contact a {
+      color: #ccc;
+      text-decoration: none;
+    }
+
+    .contact a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
@@ -83,8 +124,17 @@
     </p>
   </div>
 
+  <div class="contact">
+    <h2>Connect with Me</h2>
+    <ul>
+      <li><i class="fab fa-instagram"></i> <a href="https://www.instagram.com/YOUR_USERNAME" target="_blank">@YOUR_USERNAME</a></li>
+      <li><i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/YOUR_USERNAME" target="_blank">linkedin.com/in/YOUR_USERNAME</a></li>
+      <li><i class="fas fa-envelope"></i> <a href="mailto:your.email@example.com">your.email@example.com</a></li>
+      <li><i class="fas fa-phone"></i> <a href="tel:+1234567890">+1 (234) 567-890</a></li>
+    </ul>
+  </div>
+
   <script>
-    // Radar chart drawing code (same as before)
     const canvas = document.getElementById("radarChart");
     const ctx = canvas.getContext("2d");
 
@@ -99,7 +149,6 @@
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Draw web
       ctx.strokeStyle = "#444";
       ctx.lineWidth = 1;
       for (let layer = 1; layer <= 5; layer++) {
@@ -114,7 +163,6 @@
         ctx.stroke();
       }
 
-      // Draw axes + labels
       ctx.strokeStyle = "#666";
       ctx.fillStyle = "#ccc";
       ctx.textAlign = "center";
@@ -124,18 +172,13 @@
         const angle = (Math.PI * 2 / total) * i;
         const x = centerX + Math.cos(angle) * radius * 1.1;
         const y = centerY + Math.sin(angle) * radius * 1.1;
-
-        // axis
         ctx.beginPath();
         ctx.moveTo(centerX, centerY);
         ctx.lineTo(centerX + Math.cos(angle) * radius, centerY + Math.sin(angle) * radius);
         ctx.stroke();
-
-        // label
         ctx.fillText(labels[i], x, y);
       }
 
-      // Draw data polygon
       ctx.beginPath();
       for (let i = 0; i < total; i++) {
         const angle = (Math.PI * 2 / total) * i;
