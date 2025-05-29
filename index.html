@@ -1,38 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>KY Portfolio — Coming Soon</title>
   <style>
     body {
       background: #0e0e0e;
       color: white;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      height: 100vh;
-      overflow: hidden;
+      justify-content: flex-start;
+      min-height: 100vh;
       margin: 0;
+      padding: 2rem 1rem;
     }
 
     canvas {
       max-width: 90vw;
+      margin: 1.5rem 0;
     }
 
     h1 {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
+      font-size: 2.5rem;
+      margin: 0;
       text-align: center;
     }
 
-    p {
-      font-size: 1rem;
+    p, li {
+      font-size: 1.1rem;
+      line-height: 1.5;
+      max-width: 700px;
+      margin: 0.6rem auto;
       color: #ccc;
-      max-width: 600px;
-      text-align: center;
-      margin-top: 0.5rem;
+    }
+
+    ul {
+      max-width: 700px;
+      padding-left: 1.5rem;
+      color: #ccc;
+    }
+
+    .explanation {
+      background: #121212;
+      border-radius: 10px;
+      padding: 1.5rem 2rem;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+      margin-top: 3rem;
+      max-width: 720px;
+      text-align: left;
     }
   </style>
 </head>
@@ -41,12 +58,38 @@
   <canvas id="radarChart" width="400" height="400"></canvas>
   <p>This site will grow as I grow. Every skill I upload updates the chart.</p>
 
+  <div class="explanation">
+    <h2>About This Project</h2>
+    <p>
+      This is a side project I’m building to showcase my evolving skills visually.
+      The idea is to create a portfolio website that automatically tracks and displays
+      my skill stats using dynamic radar charts — like the pentagon shapes you see in many games.
+    </p>
+    <p>
+      Here’s how it will work:
+    </p>
+    <ul>
+      <li>You’ll be able to upload files related to different skill categories (3D, Art, Animation, Game Dev, Design, and more).</li>
+      <li>The website will calculate averages for each skill category based on the uploaded work.</li>
+      <li>It will then automatically redraw the radar chart to visually reflect my current skill levels.</li>
+      <li>Each category’s stats will update live, showing my growth and progress over time.</li>
+    </ul>
+    <p>
+      For now, this landing page is just a teaser to share my vision and keep track of progress.
+      After my IREX exhibition at university, I will dedicate more time and focus on fully building out this site.
+    </p>
+    <p>
+      Stay tuned — this portfolio will be a living record of my creative journey, updated constantly as I add new work!
+    </p>
+  </div>
+
   <script>
+    // Radar chart drawing code (same as before)
     const canvas = document.getElementById("radarChart");
     const ctx = canvas.getContext("2d");
 
     const labels = ["3D", "Art", "Game Dev", "Animation", "Design"];
-    const stats = [50, 70, 65, 30, 90]; // 0-100
+    const stats = [50, 70, 65, 30, 90]; // placeholder values
 
     function drawRadarChart() {
       const centerX = canvas.width / 2;
@@ -74,19 +117,22 @@
       // Draw axes + labels
       ctx.strokeStyle = "#666";
       ctx.fillStyle = "#ccc";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.font = "14px Segoe UI, sans-serif";
       for (let i = 0; i < total; i++) {
         const angle = (Math.PI * 2 / total) * i;
-        const x = centerX + Math.cos(angle) * radius;
-        const y = centerY + Math.sin(angle) * radius;
+        const x = centerX + Math.cos(angle) * radius * 1.1;
+        const y = centerY + Math.sin(angle) * radius * 1.1;
 
         // axis
         ctx.beginPath();
         ctx.moveTo(centerX, centerY);
-        ctx.lineTo(x, y);
+        ctx.lineTo(centerX + Math.cos(angle) * radius, centerY + Math.sin(angle) * radius);
         ctx.stroke();
 
         // label
-        ctx.fillText(labels[i], x * 1.08, y * 1.08);
+        ctx.fillText(labels[i], x, y);
       }
 
       // Draw data polygon
