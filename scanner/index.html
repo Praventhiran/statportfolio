@@ -4,17 +4,8 @@
   <title>AR Card Demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    html, body {
-      margin: 0;
-      overflow: hidden;
-      height: 100%;
-    }
-
-    #ar-container {
-      width: 100vw;
-      height: 100vh;
-      position: relative;
-    }
+    html, body { margin: 0; overflow: hidden; height: 100%; }
+    #ar-container { width: 100vw; height: 100vh; position: relative; }
 
     #scan-again-btn {
       position: absolute;
@@ -37,15 +28,22 @@
     <button id="scan-again-btn">Scan Again</button>
   </div>
 
-  <!-- Script dependencies -->
-  <script src="libs/three.min.js"></script>
-  <script src="libs/GLTFLoader.js"></script>
-  <script src="libs/tween.umd.js"></script>
-  <script src="libs/mindar-image-three.prod.js"></script>
+  <!-- ✅ Load Three.js BEFORE MindAR -->
+  <script src="./libs/three.min.js"></script>
 
-  <!-- Main AR script -->
+  <!-- ✅ GLTFLoader must be the UMD version (NOT using import) -->
+  <script src="./libs/GLTFLoader.umd.js"></script>
+
+  <!-- ✅ TWEEN -->
+  <script src="./libs/tween.umd.js"></script>
+
+  <!-- ✅ MindAR AFTER Three.js -->
+  <script src="./libs/mindar-image-three.prod.js"></script>
+
   <script>
     document.addEventListener("DOMContentLoaded", async () => {
+      console.log("Script is starting...");
+
       const mindarThree = new window.MINDAR.IMAGE.MindARThree({
         container: document.querySelector("#ar-container"),
         imageTargetSrc: "./assets/targets.mind",
@@ -75,22 +73,22 @@
       anchor.group.add(statsMesh);
 
       // === 3D character model ===
-      const gltfLoader = new GLTFLoader();
+      const gltfLoader = new THREE.GLTFLoader(); // ✅ Works now
       const model = await gltfLoader.loadAsync('./assets/character.glb');
       const character = model.scene;
       character.scale.set(0, 0, 0);
       character.position.set(0, 0, 0);
       anchor.group.add(character);
 
-      // === Start camera and AR loop ===
       await mindarThree.start();
+      console.log("MindAR started.");
 
       renderer.setAnimationLoop(() => {
         renderer.render(scene, camera);
         TWEEN.update();
       });
 
-      // === Show everything when image target is found ===
+      // === Animations
       anchor.onTargetFound = () => {
         new TWEEN.Tween(character.scale).to({ x: 1, y: 1, z: 1 }, 800)
           .easing(TWEEN.Easing.Back.Out).start();
@@ -102,21 +100,17 @@
           .easing(TWEEN.Easing.Elastic.Out).delay(600).start();
       };
 
-      // === Hide everything when target is lost ===
       anchor.onTargetLost = () => {
         character.scale.set(0, 0, 0);
         cardMesh.scale.set(0, 0, 0);
         statsMesh.scale.set(0, 0, 0);
       };
 
-      // === Optional Scan Again button ===
-      const scanBtn = document.getElementById("scan-again-btn");
-      if (scanBtn) {
-        scanBtn.addEventListener("click", async () => {
-          await mindarThree.stop();
-          await mindarThree.start();
-        });
-      }
+      // === Scan Again Button
+      document.getElementById("scan-again-btn").addEventListener("click", async () => {
+        await mindarThree.stop();
+        await mindarThree.start();
+      });
     });
   </script>
 </body>
