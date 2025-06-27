@@ -25,12 +25,23 @@
 
     /* Header Section Styling */
     header {
-      background: url('assets/background.jpg') no-repeat center center/cover;
       width: 100%;
-      height: 50vh;
+      height: 50vh;  /* Reduced height to fit under the "I'm a passionate creator" section */
       position: relative;
       color: #fff;
-      opacity: 0.3;
+    }
+    
+    /* Background Image Container */
+    header .background {
+      background: url('assets/background.jpg') no-repeat center center/cover;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: -1;  /* Make sure the background stays behind the text */
+      opacity: 0.3;  /* Lowered opacity to 30% */
     }
 
     /* Navigation Bar Styling */
