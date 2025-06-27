@@ -2,31 +2,111 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>KY Portfolio — Coming Soon</title>
+  <title>Praventhiran VRanger Portfolio</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: #0e0e0e;
       color: white;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
       min-height: 100vh;
-      margin: 0;
-      padding: 2rem 1rem;
+      padding: 0;
+    }
+
+    header {
+      background: url('your-background-image.jpg') no-repeat center center/cover;
+      width: 100%;
+      height: 100vh;
+      position: relative;
+      color: #fff;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 50px;
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .logo img {
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      background-color: #1a1a1a;
+      padding: 10px 18px;
+      border-radius: 6px;
+      transition: background 0.3s;
+    }
+
+    nav ul li a:hover {
+      background-color: #444;
+    }
+
+    .intro {
+      max-width: 900px;
+      margin: 150px auto 0;
+      padding: 0 30px;
+      text-align: left;
+      color: white;
+    }
+
+    .intro h1 {
+      font-size: 3rem;
+      font-weight: bold;
+      color: cyan;
+    }
+
+    .intro h3 {
+      margin-top: 10px;
+      font-weight: 500;
+      color: #ccc;
+    }
+
+    .intro p {
+      margin-top: 20px;
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: #ccc;
+    }
+
+    h1.section-title {
+      font-size: 2.5rem;
+      margin: 2rem 0 1rem;
+      text-align: center;
+      color: cyan;
     }
 
     canvas {
       max-width: 90vw;
       margin: 1.5rem 0;
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      margin: 0;
-      text-align: center;
     }
 
     p, li {
@@ -37,20 +117,25 @@
       color: #ccc;
     }
 
-    .projects {
-      margin-top: 3rem;
+    .projects, .contact {
       max-width: 720px;
-      text-align: left;
+      width: 100%;
+      padding: 1rem 1.5rem;
+      margin-top: 2rem;
+      background: #181818;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.1);
     }
 
-    .projects h2 {
+    .projects h2, .contact h2 {
       font-size: 1.8rem;
       margin-bottom: 1rem;
+      color: cyan;
     }
 
     .project-item {
-      background: #181818;
-      padding: 1rem 1.5rem;
+      background: #1a1a1a;
+      padding: 1rem;
       margin-bottom: 1rem;
       border-radius: 8px;
       box-shadow: 0 0 5px rgba(0, 255, 255, 0.1);
@@ -63,19 +148,6 @@
 
     .project-item small {
       color: #888;
-    }
-
-    .contact {
-      margin-top: 3rem;
-      max-width: 720px;
-      background: #1a1a1a;
-      padding: 1rem 1.5rem;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 255, 255, 0.1);
-    }
-
-    .contact h2 {
-      margin-top: 0;
     }
 
     .contact ul {
@@ -107,12 +179,35 @@
   </style>
 </head>
 <body>
-  <h1>KY Portfolio: Stat System Coming Soon</h1>
+
+  <header id="home">
+    <nav>
+      <div class="logo">
+        <img src="your-logo.png" alt="Logo" />
+        Praventhiran / VRanger
+      </div>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="intro">
+      <h1>PRAVENTHIRAN VRANGER</h1>
+      <h3>Game Designer | Game Programmer | Game Artist | MSUGDC President</h3>
+      <p>
+        I’m a passionate creator who might just play too many games, across every genre you can think of. I don’t just play, I analyze, design, and imagine what could be better. I have way too many hobbies and I love putting my feet into everything—from 3D modeling and animation to storytelling, AR, and game mechanics. If something sparks my curiosity, I dive headfirst. This portfolio is where all that passion and experimentation comes together.
+      </p>
+    </div>
+  </header>
+
+  <h1 class="section-title">Skill Growth Radar</h1>
   <canvas id="radarChart" width="400" height="400"></canvas>
   <p>This site will grow as I grow. Every skill I upload updates the chart.</p>
 
   <!-- Projects Section -->
-  <div class="projects">
+  <div class="projects" id="projects">
     <h2>Projects</h2>
 
     <div class="project-item">
@@ -126,18 +221,16 @@
       <small>May 2025</small>
       <p>A prototype that blends third-person stealth movement with a turn-based battle mode, inspired by Honkai: Star Rail.</p>
     </div>
-
-    <!-- Add more projects here -->
   </div>
 
   <!-- Contact Section -->
-  <div class="contact">
+  <div class="contact" id="contact">
     <h2>Connect with Me</h2>
     <ul>
-      <li><i class="fab fa-instagram"></i> <a href="https://www.instagram.com/YOUR_USERNAME" target="_blank">vranger621</a></li>
-      <li><i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/YOUR_USERNAME" target="_blank">linkedin.com/in/praven-thiran-5674b6313/</a></li>
-      <li><i class="fas fa-envelope"></i> <a href="mailto:your.email@example.com">praventhiran621@gmail.com</a></li>
-      <li><i class="fas fa-phone"></i> <a href="tel:+1234567890">+601137823496</a></li>
+      <li><i class="fab fa-instagram"></i> <a href="https://www.instagram.com/vranger621" target="_blank">vranger621</a></li>
+      <li><i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/praven-thiran-5674b6313/" target="_blank">linkedin.com/in/praven-thiran</a></li>
+      <li><i class="fas fa-envelope"></i> <a href="mailto:praventhiran621@gmail.com">praventhiran621@gmail.com</a></li>
+      <li><i class="fas fa-phone"></i> <a href="tel:+601137823496">+601137823496</a></li>
     </ul>
   </div>
 
@@ -146,7 +239,7 @@
     const ctx = canvas.getContext("2d");
 
     const labels = ["3D", "Art", "Game Dev", "Animation", "Design"];
-    const stats = [50, 70, 65, 30, 90]; // placeholder values
+    const stats = [50, 70, 65, 30, 90];
 
     function drawRadarChart() {
       const centerX = canvas.width / 2;
