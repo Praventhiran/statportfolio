@@ -23,42 +23,14 @@
       padding: 0;
     }
 
-    /* Header Section Styling */
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;  /* Align everything to the left */
-      width: 100%;
-      height: 50vh;  /* Adjust height if needed */
-      position: relative;
-      padding: 0 20px;  /* Adjust left padding to move it to the left */
-      color: #fff;
-    }
-    
-    /* Background Image Container */
-    header .background {
-      background: url('assets/background.jpg') no-repeat center center/cover;
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: -1;  /* Make sure the background stays behind the text */
-      opacity: 0.2;  /* Lowered opacity to 20% */
-    }
-
-    /* Navigation Bar Styling */
+    /* Navigation Bar Styling (No Fixed Position) */
     nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 20px 50px;
       background-color: rgba(0, 0, 0, 0.6);
-      position: fixed;  /* Fixed position at the top */
-      top: 0;
-      left: 0;
-      right: 0;
+      width: 100%;  /* Ensure the nav takes up the full width */
       z-index: 1000;
     }
 
@@ -67,7 +39,7 @@
       align-items: center;
       font-weight: bold;
       font-size: 1.2rem;
-      color: red;  /* Red logo text */
+      color: red;
     }
 
     .logo img {
@@ -95,15 +67,45 @@
       color: #00ff00;  /* Green hover text */
     }
 
+    /* Header Section Styling */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: center;  /* Center the content */
+      width: 100%;
+      height: 50vh;  /* Adjust height if needed */
+      position: relative;
+      padding: 0 20px;
+      color: #fff;
+    }
+
+    /* Background Image Container */
+    header .background {
+      background: url('assets/background.jpg') no-repeat center center/cover;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: -1;  /* Make sure the background stays behind the text */
+      opacity: 0.2;  /* Lowered opacity to 20% */
+    }
+
     /* Intro Section Styling */
     .intro {
-      max-width: 900px;
-      margin: 150px auto 0;
+      display: flex;
+      justify-content: space-between;  /* Align text to the left and image to the right */
+      width: 100%;
+      max-width: 1200px;
       padding: 0 30px;
-      text-align: left;
       color: white;
-      z-index: 10;
       position: relative;
+      margin-top: 80px;  /* Adds space between the nav and the content */
+    }
+
+    .text-container {
+      width: 80%;  /* Set text container to 80% of the space */
     }
 
     .intro h1 {
@@ -123,6 +125,16 @@
       font-size: 1.1rem;
       line-height: 1.7;
       color: #ccc;
+    }
+
+    /* Image for the intro section (Smaller Image on the Right) */
+    .image-container {
+      width: 200px;  /* Set the size of your picture */
+      height: 300px;  /* Set the size of your picture */
+      background-image: url('assets/your-image.png');  /* Replace with your image path */
+      background-size: cover;
+      background-position: center;
+      margin-left: 30px;  /* Add space between the image and text */
     }
 
     /* Skill Growth Radar Section */
@@ -199,40 +211,32 @@
       text-decoration: underline;
     }
 
-    /* Image for the intro section */
-    .intro .image-container {
-      width: 150px;  /* Set the size of your picture */
-      height: 150px;
-      background-image: url('assets/your-image.png');  /* Replace with your image path */
-      background-size: cover;
-      background-position: center;
-      border-radius: 50%;  /* Make the image round */
-      margin-left: 30px;  /* Add space between the image and text */
-    }
   </style>
 </head>
 <body>
 
-  <header id="home">
-   <div class="background"></div>  <!-- Background image with opacity -->
-    <nav>
-      <div class="logo">
-        <img src="assets/logo.png" alt="Logo" />
-        Praventhiran / VRanger
-      </div>
-      <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
+  <nav>
+    <div class="logo">
+      <img src="assets/logo.png" alt="Logo" />
+      Praventhiran / VRanger
+    </div>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
 
+  <header id="home">
+    <div class="background"></div>  <!-- Background image with opacity -->
     <div class="intro">
-      <h1>PRAVENTHIRAN VRANGER</h1>
-      <h3>Game Designer | Game Programmer | Game Artist | MSUGDC President</h3>
-      <p>
-        I’m a passionate creator who might just play too many games, across every genre you can think of. I don’t just play, I analyze, design, and imagine what could be better. I have way too many hobbies and I love putting my feet into everything—from 3D modeling and animation to storytelling, AR, and game mechanics. If something sparks my curiosity, I dive headfirst. This portfolio is where all that passion and experimentation comes together.
-      </p>
+      <div class="text-container">
+        <h1>PRAVENTHIRAN VRANGER</h1>
+        <h3>Game Designer | Game Programmer | Game Artist | MSUGDC President</h3>
+        <p>
+          I’m a passionate creator who might just play too many games, across every genre you can think of. I don’t just play, I analyze, design, and imagine what could be better. I have way too many hobbies and I love putting my feet into everything—from 3D modeling and animation to storytelling, AR, and game mechanics. If something sparks my curiosity, I dive headfirst. This portfolio is where all that passion and experimentation comes together.
+        </p>
+      </div>
 
       <!-- Your image here -->
       <div class="image-container"></div>
