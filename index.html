@@ -25,9 +25,13 @@
 
     /* Header Section Styling */
     header {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;  /* Align everything to the left */
       width: 100%;
-      height: 50vh;  /* Reduced height to fit under the "I'm a passionate creator" section */
+      height: 50vh;  /* Adjust height if needed */
       position: relative;
+      padding: 0 20px;  /* Adjust left padding to move it to the left */
       color: #fff;
     }
     
@@ -41,7 +45,7 @@
       left: 0;
       right: 0;
       z-index: -1;  /* Make sure the background stays behind the text */
-      opacity: 0.3;  /* Lowered opacity to 30% */
+      opacity: 0.2;  /* Lowered opacity to 20% */
     }
 
     /* Navigation Bar Styling */
@@ -63,7 +67,7 @@
       align-items: center;
       font-weight: bold;
       font-size: 1.2rem;
-      color: #00ff00;  /* Green logo text */
+      color: red;  /* Red logo text */
     }
 
     .logo img {
@@ -194,6 +198,17 @@
     .contact a:hover {
       text-decoration: underline;
     }
+
+    /* Image for the intro section */
+    .intro .image-container {
+      width: 150px;  /* Set the size of your picture */
+      height: 150px;
+      background-image: url('assets/your-image.jpg');  /* Replace with your image path */
+      background-size: cover;
+      background-position: center;
+      border-radius: 50%;  /* Make the image round */
+      margin-left: 30px;  /* Add space between the image and text */
+    }
   </style>
 </head>
 <body>
@@ -218,6 +233,9 @@
       <p>
         I’m a passionate creator who might just play too many games, across every genre you can think of. I don’t just play, I analyze, design, and imagine what could be better. I have way too many hobbies and I love putting my feet into everything—from 3D modeling and animation to storytelling, AR, and game mechanics. If something sparks my curiosity, I dive headfirst. This portfolio is where all that passion and experimentation comes together.
       </p>
+
+      <!-- Your image here -->
+      <div class="image-container"></div>
     </div>
   </header>
 
