@@ -247,26 +247,34 @@
       color: #888;
     }
 
-    /* Add Background Image Behind the Contact Section */
+    body {
+      /* Add this to contain absolute elements */
+      position: relative;
+      /* Ensure minimum height is viewport height */
+      min-height: 100vh;
+    }
+    
     .background-rectangle {
       position: absolute;
-      top: calc(670vh - 200px);
+      bottom: 0;
       width: 100%;
-      height: 350px; /* Adjust height as needed */
-      background-image: url('assets/bottom-image.png'); /* Add your image path here */
+      height: 350px;
+      background-image: url('assets/bottom-image.png');
       background-size: cover;
       background-position: center;
       z-index: -1;
       opacity: 0.2;
+      /* Add this to ensure it stays at the bottom of content */
+      margin-top: auto;
     }
 
-    /* Styling for the Contact Section */
+        /* Styling for the Contact Section */
     .contact {
       position: relative; /* Ensure it's positioned well */
       max-width: 720px;
       width: 100%;
       padding: 2rem 2.5rem;
-      margin-top: 9rem;
+      margin-top: 15rem;
       background: linear-gradient(135deg, #181818, #222222); /* Dark gradient background */
       border-radius: 15px;
       box-shadow: 0 0 30px rgba(0, 255, 255, 0.3); /* Stronger shadow for cool effect */
@@ -495,18 +503,18 @@
     /* Styling for the "Back to Top" Button */
      .back-to-top-btn {
        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background-color: rgba(0, 255, 0, 0.6);  /* Same green as the 'Next' button */
-        color: white;
-        border: none;
-        padding: 10px 15px;
-        font-size: 18px;
-        border-radius: 50%;
-        cursor: pointer;
-        z-index: 1000;
-        transition: background-color 0.3s, transform 0.3s;
-        display: none; /* Initially hidden */
+      bottom: 20px;
+      right: 20px;
+      background-color: rgba(0, 255, 0, 0.6);  /* Same green as the 'Next' button */
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      font-size: 18px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 1000;
+      transition: background-color 0.3s, transform 0.3s;
+      display: none; /* Initially hidden */
     }
 
     .back-to-top-btn:hover {
@@ -766,7 +774,7 @@
     </ul>
   </div>
 
-<div class="background-rectangle"></div>
+  <div class="background-rectangle"></div>
 
   <script>
     const canvas = document.getElementById("radarChart");
