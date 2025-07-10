@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Praventhiran VRanger Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0e0e0e;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    /* Navigation Bar Styling */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 50px;
+      background-color: rgba(0, 0, 0, 0.6);
+      width: 100%;
+      z-index: 1000;
+      position: sticky;
+      top: 0;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: red;
+    }
+
+    .logo img {
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      background-color: #1a1a1a;
+      padding: 10px 18px;
+      border-radius: 6px;
+      transition: background 0.3s;
+    }
+
+    nav ul li a:hover {
+      background-color: #444;
+      color: #00ff00;
+    }
+
+    /* Background Image Styling */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 50vh;
+      position: relative;
+      padding: 0 20px;
+      color: #fff;
+      text-align: center;
+    }
+
+    header .background {
+      background: url('assets/background.jpg') no-repeat center center/cover;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: -1;
+      opacity: 0.2;
+    }
+
+    header .content {
+      position: relative;
+      z-index: 10;
+      max-width: 90%;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      font-weight: bold;
+      color: #00ff00;
+    }
+
+    header .description {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      color: #ccc;
+      max-width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Cards Section Styling */
+    .cards-section {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 30px;
+        margin-top: 40px;
+        padding: 0 20px 30px;
+        width: 100%;
+        max-width: 1800px;
+    }
+
+    .card {
+      background-color: #1a1a1a;
+      border-radius: 10px;
+      width: 100%;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+      overflow: hidden;
+      text-align: center;
+      padding: 20px;
+      transition: transform 0.3s;
+      cursor: pointer;
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: contain;
+      border-radius: 5px;
+      background-color: #222;
+      margin-bottom: 15px;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      font-size: 1.5rem;
+      color: cyan;
+      flex-shrink: 0;
+    }
+
+    .card p {
+      margin-top: 10px;
+      font-size: 1.1rem;
+      color: #ccc;
+      flex-grow: 1;
+      overflow: auto;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    /* Back to Home Button */
+    .back-home {
+      position: absolute;
+      top: 80px;
+      left: 20px;
+      z-index: 100;
+    }
+    
+    .back-home a {
+      color: #00ff00;
+      text-decoration: none;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 8px 15px;
+      background-color: rgba(26, 26, 26, 0.7);
+      border-radius: 5px;
+      transition: all 0.3s;
+    }
+    
+    .back-home a:hover {
+      color: cyan;
+      background-color: rgba(68, 68, 68, 0.7);
+    }
+
+    /* Modal Styling */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+    }
+
+    .modal-content {
+      position: relative;
+      background-color: #333;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 90%;
+      width: 80%;
+      height: 90%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-header {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 15px;
+    }
+
+    .modal-title-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title {
+      font-size: 1.8rem;
+      color: cyan;
+    }
+
+    .modal-description {
+      color: #ccc;
+      margin-top: 8px;
+      font-size: 1.1rem;
+      line-height: 1.4;
+    }
+
+    .close-btn {
+      font-size: 2rem;
+      cursor: pointer;
+      color: white;
+    }
+
+    .modal-body {
+      display: flex;
+      flex: 1;
+      gap: 20px;
+      overflow: hidden;
+    }
+
+    .media-column {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .media-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .media-label {
+      font-size: 1.2rem;
+      color: #00ff00;
+    }
+
+    .image-gallery {
+      display: flex;
+      gap: 15px;
+      overflow-x: auto;
+      padding: 10px 0;
+      scrollbar-width: thin;
+      scrollbar-color: #00ff00 #222;
+    }
+
+    .image-gallery img {
+      height: 300px;
+      width: auto;
+      max-width: 100%;
+      object-fit: contain;
+      background-color: #222;
+      border-radius: 5px;
+      flex-shrink: 0;
+    }
+
+    /* Custom scrollbar for gallery */
+    .image-gallery::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .image-gallery::-webkit-scrollbar-track {
+      background: #222;
+      border-radius: 10px;
+    }
+
+    .image-gallery::-webkit-scrollbar-thumb {
+      background-color: #00ff00;
+      border-radius: 10px;
+    }
+
+    .modal-video {
+      width: 100%;
+      height: 300px;
+      object-fit: contain;
+      background-color: #222;
+      border-radius: 5px;
+    }
+
+    .code-container {
+      flex: 1;
+      background-color: #222;
+      border-radius: 5px;
+      padding: 15px;
+      overflow: auto;
+    }
+
+    .code-label {
+      font-size: 1.2rem;
+      color: #00ff00;
+      margin-bottom: 10px;
+    }
+
+    pre {
+      margin: 0;
+      color: #ddd;
+      font-family: 'Courier New', monospace;
+      white-space: pre-wrap;
+      background: #222;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    /* Contact Section Styling */
+    .contact {
+      max-width: 720px;
+      width: 100%;
+      padding: 2rem;
+      margin-top: 40px;
+      background: linear-gradient(135deg, #181818, #222222);
+      border-radius: 15px;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+      text-align: center;
+    }
+
+    .contact h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      color: cyan;
+      font-weight: 700;
+    }
+
+    .contact ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .contact li {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .contact i {
+      font-size: 1.4rem;
+      color: #00ff00;
+    }
+
+    .contact a {
+      color: #ccc;
+      font-size: 1.1rem;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact a:hover {
+      color: #00ff00;
+      text-decoration: underline;
+    }
+
+    /* Back to Top Button */
+    .back-to-top-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: rgba(0, 255, 0, 0.6);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      font-size: 18px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 1000;
+      transition: background-color 0.3s, transform 0.3s;
+      display: none;
+    }
+
+    .back-to-top-btn:hover {
+      background-color: rgba(0, 255, 0, 0.9);
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navigation Bar -->
+  <nav>
+    <div class="logo">
+      <img src="assets/logo.png" alt="Logo" />
+      Praventhiran / VRanger
+    </div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Back to Home Button -->
+  <div class="back-home">
+    <a href="index.html"><i class="fas fa-arrow-left"></i> Back to Home</a>
+  </div>
+
+  <!-- Background Image Section with Title and Introduction -->
+  <header id="home">
+    <div class="background"></div>
+    <div class="content">
+      <h1>Game Development</h1>
+      <p class="description">Explore my journey in game development, where I design and develop immersive worlds.</p>
+    </div>
+  </header>
+
+  <!-- Main Cards Section -->
+  <div class="cards-section">
+
+    <!-- Card 1 - QR System -->
+    <div class="card" onclick="openModal('QR')">
+      <img src="assets/gamedev/QR-card.png" alt="QR System">
+      <h3>QR Code Scanning System</h3>
+      <p>Scans QR codes via webcam to unlock in-game skills or stat boosts from physical cards.</p>
+    </div>
+
+    <!-- Card 2 - Skill Manager System -->
+    <div class="card" onclick="openModal('skillmanager')">
+      <img src="assets/gamedev/SkillM-card.png" alt="SkillManager System">
+      <h3>Skill Manager System</h3>
+      <p>Loads chosen card IDs, equips the ultimate skill, applies stat boosts, and enables skill activation with Q in battle.</p>
+    </div>
+
+    <!-- Card 3 - Skill System -->
+    <div class="card" onclick="openModal('skill')">
+      <img src="assets/gamedev/skill-card.png" alt="Skill System">
+      <h3>Skill System</h3>
+      <p>Reusable skill with cooldown logic and an activation method to be overridden by specific skill types.</p>
+    </div>
+
+    <!-- Card 4 - Battle Starter System -->
+    <div class="card" onclick="openModal('battlestart')">
+      <img src="assets/gamedev/battlestart-card.png" alt="BattleStart System">
+      <h3>BattleStart System</h3>
+      <p>Handles stage and skill selection via UI when the player presses F near the portal, then loads the chosen battle scene.</p>
+    </div>
+
+    <!-- Card 5 - Player Controller -->
+    <div class="card" onclick="openModal('playercontroller')">
+      <img src="assets/gamedev/playercontroller-card.png" alt="Player Controller">
+      <h3>Player Controller</h3>
+      <p>A smooth third-person movement system with camera-based direction, run toggle, and inertia-driven stopping for natural deceleration.</p>
+    </div>
+
+    <!-- Card 6 - Camera System -->
+    <div class="card" onclick="openModal('camera')">
+      <img src="assets/gamedev/camera-card.png" alt="Camera System">
+      <h3>Third Person Camera System</h3>
+      <p>A smooth third-person camera system that orbits the player, avoids walls, and supports scroll zoom for a responsive and immersive view.</p>
+    </div>
+
+    <!-- Card 7 - Dodge System -->
+    <div class="card" onclick="openModal('dodge')">
+      <img src="assets/gamedev/dodge-card.png" alt="Dodge System">
+      <h3>Dodge System</h3>
+      <p>Directional dodging aligned with camera orientation, using animations and cooldown control.</p>
+    </div>
+
+    <!-- Card 8 - Idle System -->
+    <div class="card" onclick="openModal('idle')">
+      <img src="assets/gamedev/idle-card.png" alt="Idle System">
+      <h3>Idle System</h3>
+      <p>Plays a random idle animation after a delay when the character stays inactive, adding variety to idle behavior.</p>
+    </div>
+
+    <!-- Card 9 - Combo System -->
+    <div class="card" onclick="openModal('combo')">
+      <img src="assets/gamedev/combo-card.png" alt="Combo System">
+      <h3>Combo System</h3>
+      <p>Enables a standard combo attack system that can switch to an ultimate combo set temporarily using comboIndex.</p>
+    </div>
+
+  </div>
+
+  <!-- Modal for Showing Content -->
+  <div id="game-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title-container">
+          <h2 class="modal-title" id="modal-title">Function Title</h2>
+          <span class="close-btn" onclick="closeModal()">&times;</span>
+        </div>
+        <p class="modal-description" id="modal-description"></p>
+      </div>
+      
+      <div class="modal-body">
+        <div class="media-column">
+          <div class="media-container">
+            <div class="media-label">Implementation Images</div>
+            <div class="image-gallery" id="image-gallery">
+              <!-- Images will be added here by JavaScript -->
+            </div>
+          </div>
+          
+          <div class="media-container">
+            <div class="media-label">Video Demonstration</div>
+            <video controls class="modal-video" id="modal-video">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+        
+        <div class="code-container">
+          <div class="code-label">Code Implementation</div>
+          <iframe id="modal-script" frameborder="0" style="width:100%; height:100%; background:#222;"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact Section -->
+  <div class="contact" id="contact">
+    <h2>Connect with Me</h2>
+    <ul>
+      <li><i class="fab fa-instagram"></i> <a href="https://www.instagram.com/vranger621" target="_blank">vranger621</a></li>
+      <li><i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/praven-thiran-5674b6313/" target="_blank">linkedin.com/in/praven-thiran</a></li>
+      <li><i class="fas fa-envelope"></i> <a href="mailto:praventhiran621@gmail.com">praventhiran621@gmail.com</a></li>
+      <li><i class="fas fa-phone"></i> <a href="tel:+601137823496">+601137823496</a></li>
+    </ul>
+  </div>
+
+  <!-- Back to Top Button -->
+  <button id="backToTopBtn" class="back-to-top-btn" onclick="scrollToTop()">↑</button>
+
+  <!-- JavaScript -->
+  <script>
+    // Feature descriptions data
+    const featureDescriptions = {
+      'QR': 'The QRCodeScanner script uses the device\'s webcam to detect and decode QR codes in real time. When a valid QR code is scanned, it retrieves the associated Skill or StatBoost from a database of ScriptableObjects and unlocks it for the player. This system enables AR-based skill acquisition by linking physical collectible cards to in-game abilities.',
+      'skillmanager': 'At loadout, selected card IDs are saved in GameManager. When the battle map loads, SkillManager grabs those IDs, looks up each card from Resources, and applies them using UnlockSkill(). Ultimate cards set the activeSkill, while stat cards boost player stats via ApplyStatBonusesToPlayer(). The Q key triggers the equipped skill if it\'s ready.',
+      'skill': 'The Skill class is a modular ScriptableObject that defines core skill properties like ID, power, animation, and cooldown logic. It uses CanActivate() to control when skills can be used and allows unique behavior through the ActivateSkill() method. This setup makes it easy to keep adding new skills later without changing the core system.',
+      'battlestart': 'The BattleStarter script handles the transition from stage selection to skill selection, storing the chosen stage in GameManager, then loading the selected battle scene where the player\'s chosen ultimate and stat cards are automatically equipped using persistent data.',
+      'playercontroller': 'This PlayerController script enables smooth third-person character movement with a walk-run toggle, camera-relative direction, and inertia-based stopping behavior. Its unique feature is the inertia drift mechanic where when movement input stops, the character briefly glides forward before halting, creating a more natural and responsive stop animation. It also integrates with a combo attack system to prevent movement during attacks and dynamically adjusts animation speed based on input and movement mode.',
+      'camera': 'This third-person camera system smoothly follows the player while allowing full control through mouse movement and scroll-based zoom. As you move the mouse, the camera orbits around the player, and you can scroll in or out to adjust the view. It also intelligently avoids clipping through walls by checking for obstacles and adjusting the camera\'s distance automatically. The camera movement is made smooth using damping, which helps it transition naturally rather than snapping into place. Overall, it creates a responsive and polished camera feel that keeps the player in focus while adapting to the environment.',
+      'dodge': 'This script enables camera-relative dodging, letting the player dodge forward, back, left, or right based on movement input and the camera\'s current direction. The player rotates to match the camera before dodging, plays the correct animation, and temporarily disables movement until the dodge finishes.',
+      'idle': 'This IdleBehaviour script adds dynamic idle animation control by triggering a random idle animation after the character has been inactive for a set time, using idleLoop to blend between animations at proper loop points for smooth and natural transitions.',
+      'combo': 'This ComboAttack script handles a flexible combo system where the player can chain up to three attacks based on timing and input, with the combo style dynamically changing depending on the comboIndex. By default, it plays a base combo, but when an ultimate combo is triggered via a skill, it temporarily swaps to a different combo set for a set duration. During this mode, a special activation animation may play, and after the duration ends, the combo reverts to its default type—allowing for dynamic, skill-based combo variation in gameplay.',
+    };
+
+    function openModal(functionName) {
+      // Set title
+      document.getElementById('modal-title').textContent = 
+        functionName.charAt(0).toUpperCase() + functionName.slice(1) + " System";
+      
+      // Set description
+      document.getElementById('modal-description').textContent = 
+        featureDescriptions[functionName] || 'Detailed description of this system\'s functionality and implementation.';
+      
+      // Clear previous images
+      const gallery = document.getElementById('image-gallery');
+      gallery.innerHTML = '';
+      
+      // Add multiple images (example with 3 images)
+      for (let i = 1; i <= 3; i++) {
+        const imgPath = `assets/gamedev/${functionName}-image${i}.png`;
+        // Check if image exists before adding
+        const img = document.createElement('img');
+        img.src = imgPath;
+        img.alt = `${functionName} example ${i}`;
+        img.onerror = function() {
+          this.style.display = 'none'; // Hide if image doesn't exist
+        };
+        gallery.appendChild(img);
+      }
+      
+      // Set video
+      document.getElementById('modal-video').src = 
+        `assets/gamedev/${functionName}-demo.mp4`;
+      
+      // Set code
+      document.getElementById('modal-script').src = 
+        `assets/gamedev/${functionName}.cs`;
+      
+      // Show modal
+      document.getElementById('game-modal').style.display = 'flex';
+      document.getElementById('modal-video').load();
+    }
+
+    function closeModal() {
+      document.getElementById('game-modal').style.display = 'none';
+      // Pause video when closing
+      document.getElementById('modal-video').pause();
+    }
+
+    // Close modal when clicking outside content
+    window.onclick = function(event) {
+      if (event.target === document.getElementById('game-modal')) {
+        closeModal();
+      }
+    };
+
+    // Scroll to top functionality
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+
+    window.onscroll = function() {
+      let backToTopBtn = document.getElementById("backToTopBtn");
+      if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+        backToTopBtn.style.display = "block";
+      } else {
+        backToTopBtn.style.display = "none";
+      }
+    };
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
