@@ -128,6 +128,28 @@
         max-width: 1800px;
     }
 
+    .lang-badge {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        font-size: 0.9rem;
+        font-weight: bold;
+        padding: 4px 8px;
+        border-radius: 5px;
+        color: #fff;
+        z-index: 10;
+    }
+
+    /* Colors by language */
+    .lang-badge.csharp {
+        background-color: #178600; /* C# green */
+    }
+
+    .lang-badge.cpp {
+        background-color: #00599C; /* C++ blue */
+    }
+
+    
     .card {
       background-color: #1a1a1a;
       border-radius: 10px;
@@ -141,6 +163,7 @@
       height: 400px;
       display: flex;
       flex-direction: column;
+      position: relative;
     }
 
     .card img {
@@ -454,6 +477,7 @@
 
     <!-- Card 1 - QR System -->
     <div class="card" onclick="openModal('QR')">
+      <span class="lang-badge csharp">C#</span>
       <img src="assets/gamedev/QR-card.png" alt="QR System">
       <h3>QR Code Scanning System</h3>
       <p>Scans QR codes via webcam to unlock in-game skills or stat boosts from physical cards.</p>
@@ -461,6 +485,7 @@
 
     <!-- Card 2 - Skill Manager System -->
     <div class="card" onclick="openModal('skillmanager')">
+      <span class="lang-badge csharp">C#</span>
       <img src="assets/gamedev/SkillM-card.png" alt="SkillManager System">
       <h3>Skill Manager System</h3>
       <p>Loads chosen card IDs, equips the ultimate skill, applies stat boosts, and enables skill activation with Q in battle.</p>
@@ -468,6 +493,7 @@
 
     <!-- Card 3 - Skill System -->
     <div class="card" onclick="openModal('skill')">
+      <span class="lang-badge csharp">C#</span>
       <img src="assets/gamedev/skill-card.png" alt="Skill System">
       <h3>Skill System</h3>
       <p>Reusable skill with cooldown logic and an activation method to be overridden by specific skill types.</p>
@@ -475,6 +501,7 @@
 
     <!-- Card 4 - Battle Starter System -->
     <div class="card" onclick="openModal('battlestart')">
+      <span class="lang-badge csharp">C#</span>
       <img src="assets/gamedev/battlestart-card.png" alt="BattleStart System">
       <h3>BattleStart System</h3>
       <p>Handles stage and skill selection via UI when the player presses F near the portal, then loads the chosen battle scene.</p>
@@ -482,6 +509,7 @@
 
     <!-- Card 5 - Player Controller -->
     <div class="card" onclick="openModal('playercontroller')">
+      <span class="lang-badge csharp">C#</span>
       <img src="assets/gamedev/playercontroller-card.png" alt="Player Controller">
       <h3>Player Controller</h3>
       <p>A smooth third-person movement system with camera-based direction, run toggle, and inertia-driven stopping for natural deceleration.</p>
@@ -489,6 +517,7 @@
 
     <!-- Card 6 - Camera System -->
     <div class="card" onclick="openModal('camera')">
+      <span class="lang-badge csharp">C#</span>
       <img src="assets/gamedev/camera-card.png" alt="Camera System">
       <h3>Third Person Camera System</h3>
       <p>A smooth third-person camera system that orbits the player, avoids walls, and supports scroll zoom for a responsive and immersive view.</p>
@@ -496,6 +525,7 @@
 
     <!-- Card 7 - Dodge System -->
     <div class="card" onclick="openModal('dodge')">
+      <span class="lang-badge csharp">C#</span>
       <img src="assets/gamedev/dodge-card.png" alt="Dodge System">
       <h3>Dodge System</h3>
       <p>Directional dodging aligned with camera orientation, using animations and cooldown control.</p>
@@ -503,6 +533,7 @@
 
     <!-- Card 8 - Idle System -->
     <div class="card" onclick="openModal('idle')">
+      <span class="lang-badge csharp">C#</span>
       <img src="assets/gamedev/idle-card.png" alt="Idle System">
       <h3>Idle System</h3>
       <p>Plays a random idle animation after a delay when the character stays inactive, adding variety to idle behavior.</p>
@@ -510,6 +541,7 @@
 
     <!-- Card 9 - Combo System -->
     <div class="card" onclick="openModal('combo')">
+      <span class="lang-badge cpp">C++</span>
       <img src="assets/gamedev/combo-card.png" alt="Combo System">
       <h3>Combo System</h3>
       <p>Enables a standard combo attack system that can switch to an ultimate combo set temporarily using comboIndex.</p>
