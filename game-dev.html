@@ -547,7 +547,7 @@
         
         <div class="code-container">
           <div class="code-label">Code Implementation</div>
-          <iframe id="modal-script" frameborder="0" style="width:100%; height:100%; background:#222;"></iframe>
+          <pre id="modal-script">Loading...</pre>
         </div>
       </div>
     </div>
@@ -613,8 +613,20 @@
         `assets/gamedev/${functionName}-demo.mp4`;
       
       // Set code
-      document.getElementById('modal-script').src = 
-        `assets/gamedev/${functionName}.txt`;
+      const codeBlock = document.getElementById('modal-script');
+      codeBlock.textContent = "Loading...";
+
+      fetch(`assets/gamedev/${functionName}.txt`)
+        .then(response => {
+          if (!response.ok) throw new Error("File not found");
+          return response.text();
+        })
+        .then(data => {
+          codeBlock.textContent = data;
+        })
+        .catch(err => {
+          codeBlock.textContent = "Code not found.";
+        });
       
       // Show modal
       document.getElementById('game-modal').style.display = 'flex';
