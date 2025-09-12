@@ -473,6 +473,8 @@
   </header>
 
   <!-- Main Cards Section -->
+  <!-- <span class="lang-badge csharp">C#</span> -->
+  <!-- <span class="lang-badge cpp">C++</span> -->
   <div class="cards-section">
 
     <!-- Card 1 - QR System -->
@@ -541,10 +543,58 @@
 
     <!-- Card 9 - Combo System -->
     <div class="card" onclick="openModal('combo')">
-      <span class="lang-badge cpp">C++</span>
+      <span class="lang-badge csharp">C#</span>
       <img src="assets/gamedev/combo-card.png" alt="Combo System">
       <h3>Combo System</h3>
       <p>Enables a standard combo attack system that can switch to an ultimate combo set temporarily using comboIndex.</p>
+    </div>
+
+    <!-- Card 10 - Game Manager System -->
+    <div class="card" onclick="openModal('gamemanager')">
+      <span class="lang-badge csharp">C#</span>
+      <img src="assets/gamedev/gamemanager-card.png" alt="GameManager System">
+      <h3>Game Manager System</h3>
+      <p>Maintains persistent game data like unlocked cards and selected stages 	 across scenes, ensuring scanned skills aren’t lost.</p>
+    </div>
+
+    <!-- Card 11 - Dialogue System -->
+    <div class="card" onclick="openModal('dialogue')">
+      <span class="lang-badge csharp">C#</span>
+      <img src="assets/gamedev/dialogue-card.png" alt="Dialogue System">
+      <h3>Dialogue System</h3>
+      <p>A lightweight NPC dialogue system that displays text line-by-line and temporarily disables player controls.</p>
+    </div>
+
+    <!-- Card 12 - Weapon Manager -->
+    <div class="card" onclick="openModal('weaponmanager')">
+      <span class="lang-badge csharp">C#</span>
+      <img src="assets/gamedev/weaponmanager-card.png" alt="Weapon Manager">
+      <h3>Weapon Manager System</h3>
+      <p>Controls weapon visibility, swapping between sword and claw, and toggling hit detection via animation events.</p>
+    </div>
+
+    <!-- Card 13 - Arena Manager -->
+    <div class="card" onclick="openModal('arenamanager')">
+      <span class="lang-badge csharp">C#</span>
+      <img src="assets/gamedev/arenamanager-card.png" alt="Arena Manager">
+      <h3>Arena Manager System</h3>
+      <p>Controls arena battles by spawning enemies, locking exits, and triggering a cinematic slow-motion sequence on the final kill.</p>
+    </div>
+
+    <!-- Card 14 - Enemy Foot Soldier AI -->
+    <div class="card" onclick="openModal('enemyfootsoldierai')">
+      <span class="lang-badge csharp">C#</span>
+      <img src="assets/gamedev/enemyfootsoldierai-card.png" alt="Enemy Foot Soldier AI">
+      <h3>Enemy Foot Soldier AI</h3>
+      <p>AI foot soldiers that patrol, circle the player in squads, and coordinate attacks using NavMesh and animation events.</p>
+    </div>
+
+    <!-- Card 15 - Enemy Squad Manager -->
+    <div class="card" onclick="openModal('enemysquadmanager')">
+      <span class="lang-badge csharp">C#</span>
+      <img src="assets/gamedev/enemysquadmanager-card.png" alt="Enemy Squad Manager">
+      <h3>Enemy Squad Manager</h3>
+      <p>Coordinates enemy squads by assigning attack and circling roles, preventing overcrowding and improving combat flow.</p>
     </div>
 
   </div>
@@ -612,6 +662,16 @@
       'dodge': 'This script enables camera-relative dodging, letting the player dodge forward, back, left, or right based on movement input and the camera\'s current direction. The player rotates to match the camera before dodging, plays the correct animation, and temporarily disables movement until the dodge finishes.',
       'idle': 'This IdleBehaviour script adds dynamic idle animation control by triggering a random idle animation after the character has been inactive for a set time, using idleLoop to blend between animations at proper loop points for smooth and natural transitions.',
       'combo': 'This ComboAttack script handles a flexible combo system where the player can chain up to three attacks based on timing and input, with the combo style dynamically changing depending on the comboIndex. By default, it plays a base combo, but when an ultimate combo is triggered via a skill, it temporarily swaps to a different combo set for a set duration. During this mode, a special activation animation may play, and after the duration ends, the combo reverts to its default type—allowing for dynamic, skill-based combo variation in gameplay.',
+      'gamemanager': 'The GameManager is a singleton that persists across scenes, storing critical game state such as unlocked cards, selected stat cards, and chosen stages. It ensures that when transitioning to the battle map, all scanned cards remain available instead of resetting. Includes helper methods like UnlockCard() and IsCardUnlocked() for managing progression and debugging.',
+      'dialogue': 'The SimpleDialogueSystem script manages NPC conversations by displaying dialogue lines through a UI panel. It pauses player control during dialogue, advancing text line-by-line on mouse clicks. Once all lines are shown, the dialogue ends and player movement is re-enabled. This system keeps interactions clear and focused while remaining lightweight and easy to expand.',
+      'weaponmanager': 'The WeaponManager script coordinates weapon handling by toggling visibility between sword and claw, ensuring only the correct weapon is active. It links with the SwordDamage component, activating and deactivating hit detection during animation events to synchronize attacks with visuals. This system allows clean weapon swapping, accurate damage timing, and prevents overlapping weapon states.',
+      'arenamanager': 'The ArenaManager script handles combat arenas by spawning waves of enemies, blocking player exits with colliders, and monitoring active enemy counts. When all enemies are defeated, boundaries open to allow progression. For final arenas, it adds cinematic flair with a slow-motion camera spin around the player when the last enemy falls. This system combines enemy management, scene flow control, and dramatic presentation into one cohesive encounter manager.',
+      'enemyfootsoldierai': 'The EnemyFootSoldierAI script drives enemy behavior using Unity NavMesh for navigation and animation-driven attack logic. Each soldier dynamically chooses between circling the player, chasing, or attacking based on distance checks. They register with EnemySquadManager to coordinate squad formation, ensuring enemies don’t all rush at once but instead take roles (circling vs attacking). Attacks are timed via animation events, syncing damage with visuals for accuracy. This creates more realistic, coordinated enemy behavior instead of predictable one-by-one attacks.',
+      'enemysquadmanager': 'The EnemySquadManager script organizes enemy squads by limiting how many soldiers can attack at once and assigning others to circle the player. It ensures combat feels challenging but fair, avoiding “dogpile” behavior. The system dynamically spaces circling enemies evenly around the player, while prioritizing the closest ones for active attacks. Combined with EnemyFootSoldierAI, this creates coordinated squad combat where enemies take turns and maintain formation, improving pacing and immersion.',
+
+
+
+
     };
 
     function openModal(functionName) {
