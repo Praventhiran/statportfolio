@@ -1,0 +1,39 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class GameManager : MonoBehaviour
+{
+    public static GameManager Instance;
+
+    public string selectedStageID;
+    public List<string> unlockedCardIDs = new List<string>();
+    public List<string> selectedStatCardIDs = new List<string>();
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public void UnlockCard(string cardID)
+    {
+        if (!unlockedCardIDs.Contains(cardID))
+        {
+            unlockedCardIDs.Add(cardID);
+            Debug.Log($"[GameManager] Card unlocked: {cardID}");
+        }
+    }
+
+    public bool IsCardUnlocked(string cardID)
+    {
+        return unlockedCardIDs.Contains(cardID);
+    }
+}

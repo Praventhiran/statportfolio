@@ -1,0 +1,81 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class WeaponManager : MonoBehaviour
+{
+    [Header("Weapon References")]
+    public GameObject sword;
+    public GameObject claw;
+
+    [Header("Damage Settings")]
+    public float swordBaseDamage = 20f;
+    public LayerMask enemyLayers;
+
+    private SwordDamage swordDamage;
+
+    void Start()
+    {
+        //Debug.Log("Initializing weapons...");
+        if (sword != null)
+        {
+            swordDamage = sword.GetComponent<SwordDamage>();
+            if (swordDamage == null)
+            {
+                swordDamage = sword.AddComponent<SwordDamage>();
+            }
+            swordDamage.Initialize(this); // Initialize ALWAYS
+        }
+        else
+        {
+            //Debug.LogError("Sword reference not set in WeaponManager!");
+        }
+        HideAllWeapons();
+    }
+
+    // Animation Events
+    public void ShowSword()
+    {
+        if (sword != null)
+        {
+            sword.SetActive(true);
+            if (claw != null) claw.SetActive(false);
+        }
+    }
+
+    public void ShowClaw()
+    {
+        if (claw != null)
+        {
+            claw.SetActive(true);
+            if (sword != null) sword.SetActive(false);
+        }
+    }
+
+    public void HideAllWeapons()
+    {
+        if (sword != null) sword.SetActive(false);
+        if (claw != null) claw.SetActive(false);
+    }
+
+    // Called from animation events
+    public void EnableSwordDamage()
+    {
+        if (swordDamage == null)
+        {
+            //Debug.LogError("SwordDamage reference is null!");
+            return;
+        }
+        swordDamage.SetDamageActive(true);
+    }
+
+    public void DisableSwordDamage()
+    {
+        if (swordDamage == null)
+        {
+            //Debug.LogError("SwordDamage reference is null!");
+            return;
+        }
+        swordDamage.SetDamageActive(false);
+    }
+}

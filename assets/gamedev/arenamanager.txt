@@ -1,0 +1,107 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ArenaManager : MonoBehaviour
+{
+    [Header("Spawn Settings")]
+    public GameObject enemyPrefab;          // Enemy prefab to spawn
+    public Transform[] spawnPoints;         // Spawn points inside arena
+
+    [Header("Boundary Colliders")]
+    public Collider[] blockingColliders;    // Colliders blocking player exit, initially disabled
+
+    private List<GameObject> activeEnemies = new List<GameObject>();
+    private bool arenaActive = false;
+
+    public bool isFinalArena = false;  // Mark final arena in Inspector
+    public Transform player;
+    public Camera mainCamera;
+
+    // This should be attached to the trigger collider GameObject or manage trigger elsewhere
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!arenaActive && other.CompareTag("Player"))
+        {
+            StartCoroutine(StartArena());
+        }
+    }
+
+    private IEnumerator StartArena()
+    {
+        arenaActive = true;
+
+        // Activate blocking colliders
+        SetBoundaries(true);
+
+        // Spawn enemies at spawn points
+        foreach (var spawnPoint in spawnPoints)
+        {
+            var enemy = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+            activeEnemies.Add(enemy);
+
+            EnemyHealthManager healthManager = enemy.GetComponent<EnemyHealthManager>();
+            if (healthManager != null)
+            {
+                healthManager.onDeath.AddListener(() => OnEnemyDeath(enemy));
+            }
+        }
+
+        // Wait for all enemies to die
+        while (activeEnemies.Count > 0)
+        {
+            yield return null;
+        }
+
+        // Disable boundaries so player can exit
+        SetBoundaries(false);
+        arenaActive = false;
+    }
+
+    private IEnumerator LastEnemyKilledSequence()
+    {
+        // Slow motion
+        Time.timeScale = 0.2f;
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;
+
+        float duration = 3f; // spin duration
+        float elapsed = 0f;
+        float spinSpeed = 30f; // degrees per second
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.unscaledDeltaTime;  // use unscaled for timeScale affected time
+            mainCamera.transform.RotateAround(player.position, Vector3.up, spinSpeed * Time.unscaledDeltaTime);
+            yield return null;
+        }
+
+        // Restore time scale and physics
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.02f;
+
+        // Optionally, reset camera rotation or hand control back
+    }
+
+    private void OnEnemyKilled(GameObject enemy)
+    {
+        activeEnemies.Remove(enemy);
+
+        if (activeEnemies.Count == 0 && isFinalArena)
+        {
+            StartCoroutine(LastEnemyKilledSequence());
+        }
+    }
+
+    private void OnEnemyDeath(GameObject enemy)
+    {
+        activeEnemies.Remove(enemy);
+    }
+
+    private void SetBoundaries(bool active)
+    {
+        foreach (var col in blockingColliders)
+        {
+            col.gameObject.SetActive(active);
+        }
+    }
+}

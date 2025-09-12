@@ -1,0 +1,63 @@
+using UnityEngine;
+using UnityEngine.UI;  // or TMPro if you use TextMeshPro
+
+public class SimpleDialogueSystem : MonoBehaviour
+{
+    public GameObject dialoguePanel; // Assign your dialogue UI panel here
+    public Text dialogueText;        // Assign Text or TextMeshProUGUI component
+    public string[] dialogueLines;   // Lines of dialogue to show
+    private int currentLine = 0;
+    private bool isDialogueActive = false;
+
+    // Reference your PlayerController or input handler here to disable controls
+    public PlayerController playerController;
+
+    void Update()
+    {
+        if (isDialogueActive && Input.GetMouseButtonDown(0))
+        {
+            ShowNextLine();
+        }
+    }
+
+    public void StartDialogue()
+    {
+        if (dialogueLines == null || dialogueLines.Length == 0) return;
+
+        isDialogueActive = true;
+        currentLine = 0;
+        dialoguePanel.SetActive(true);
+
+        if (playerController != null)
+            playerController.allowMovement = false;
+
+        ShowLine(currentLine);
+    }
+
+    void ShowNextLine()
+    {
+        currentLine++;
+        if (currentLine >= dialogueLines.Length)
+        {
+            EndDialogue();
+        }
+        else
+        {
+            ShowLine(currentLine);
+        }
+    }
+
+    void ShowLine(int index)
+    {
+        dialogueText.text = dialogueLines[index];
+    }
+
+    void EndDialogue()
+    {
+        isDialogueActive = false;
+        dialoguePanel.SetActive(false);
+
+        if (playerController != null)
+            playerController.allowMovement = true;
+    }
+}
