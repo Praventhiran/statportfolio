@@ -1,0 +1,83 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+
+public class EnemySquadManager : MonoBehaviour
+{
+    public static EnemySquadManager Instance;
+
+    [Header("Combat Settings")]
+    public int maxAttackers = 2;
+    public float circleRadius = 3f;
+    public float minCircleSpacing = 1.5f; // Prevent overlapping
+
+    private List<EnemyFootSoldierAI> activeEnemies = new List<EnemyFootSoldierAI>();
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+            Destroy(this);
+        else
+            Instance = this;
+    }
+
+    public void RegisterEnemy(EnemyFootSoldierAI enemy)
+    {
+        if (!activeEnemies.Contains(enemy))
+        {
+            activeEnemies.Add(enemy);
+            AssignRoles();
+        }
+    }
+
+    public void UnregisterEnemy(EnemyFootSoldierAI enemy)
+    {
+        if (activeEnemies.Remove(enemy))
+            AssignRoles();
+    }
+
+    public bool CanAttack(EnemyFootSoldierAI requester)
+    {
+        // Get active attackers
+        int attackingCount = activeEnemies.Count(e =>
+            e != null &&
+            e.isAttacking &&
+            e.IsActive);
+
+        return attackingCount < maxAttackers;
+    }
+
+    public Vector3 GetCirclePosition(EnemyFootSoldierAI enemy)
+    {
+        // Get all circlers (non-attackers)
+        var circlers = activeEnemies
+            .Where(e => e != null && e.IsActive && !e.isAttacking)
+            .ToList();
+
+        int index = circlers.IndexOf(enemy);
+        if (index < 0) return enemy.transform.position;
+
+        // Space enemies evenly around circle
+        float angle = (index / (float)circlers.Count) * 360f;
+        Vector3 offset = Quaternion.Euler(0, angle, 0) * Vector3.forward * circleRadius;
+        return enemy.player.position + offset;
+    }
+
+    void AssignRoles()
+    {
+        // Clear null enemies
+        activeEnemies.RemoveAll(e => e == null);
+
+        // Prioritize closest enemies for attacking
+        var sorted = activeEnemies
+            .Where(e => e.IsActive)
+            .OrderBy(e => e.DistanceToPlayer)
+            .ToList();
+
+        for (int i = 0; i < sorted.Count; i++)
+        {
+            sorted[i].isAttacking = i < maxAttackers;
+        }
+    }
+}

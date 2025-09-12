@@ -1,0 +1,140 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+
+public class EnemyFootSoldierAI : MonoBehaviour
+{
+    [Header("References")]
+    public Transform player;
+    public NavMeshAgent agent;
+    public Animator animator;
+    public EnemyHealthManager healthManager;
+
+    [Header("Settings")]
+    public float detectionRange = 10f;
+    public float attackRange = 2f;
+    public float attackCooldown = 2f;
+    public int attackDamage = 15;
+    public bool isCircling;
+    public bool isAttacking;
+
+    public bool IsAttacking => isAttacking;
+
+    private float lastAttackTime;
+    private bool isInAttackRange;
+
+    public bool IsActive => healthManager.currentHealth > 0;
+    public float DistanceToPlayer => Vector3.Distance(transform.position, player.position);
+
+
+    void Start()
+    {
+        if (player == null)
+        {
+            player = GameObject.FindWithTag("Player").transform;
+            if (player == null) Debug.LogError("Player not found! Tag a GameObject as 'Player'");
+        }
+
+        EnemySquadManager.Instance.RegisterEnemy(this);
+        agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
+        healthManager = GetComponent<EnemyHealthManager>();
+
+        // Keep these enabled for automatic movement
+        agent.updatePosition = true;
+        agent.updateRotation = true;
+
+        animator.Play("LegNoIdle");
+    }
+
+    void Update()
+    {
+        if (EnemySquadManager.Instance == null || !IsActive) return;
+
+        float distanceToPlayer = DistanceToPlayer;
+        AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
+
+        // Movement control
+        bool shouldMove = !state.IsName("LegNoRoar") && !state.IsName("LegNoAttack");
+        agent.isStopped = !shouldMove;
+
+        // Role assignment
+        isCircling = !isAttacking &&
+                    distanceToPlayer <= detectionRange &&
+                    distanceToPlayer > attackRange;
+
+        if (isCircling)
+        {
+            Vector3 circlePos = EnemySquadManager.Instance.GetCirclePosition(this);
+            agent.SetDestination(circlePos);
+            animator.SetBool("PlayerDetected", true);
+            animator.SetBool("InAttackRange", false);
+            return;
+        }
+
+        // Attack logic
+        if (distanceToPlayer <= detectionRange)
+        {
+            if (shouldMove && isAttacking)
+            {
+                agent.SetDestination(player.position);
+                animator.SetBool("PlayerDetected", true);
+            }
+
+            isInAttackRange = distanceToPlayer <= attackRange;
+            animator.SetBool("InAttackRange", isInAttackRange);
+
+            if (isInAttackRange)
+            {
+                transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
+            }
+        }
+        else
+        {
+            animator.SetBool("PlayerDetected", false);
+        }
+    }
+
+
+    // Called via Animation Event at the END of the Roar animation
+    public void OnRoarComplete()
+    {
+        // Attack logic is handled by the Animator's transition (Exit Time)
+        isAttacking = false;
+    }
+
+    // Called via Animation Event during the Attack animation
+    public void DealDamage()
+    {
+        isAttacking = true;
+        if (Time.time > lastAttackTime + attackCooldown)
+        {
+            if (Vector3.Distance(transform.position, player.position) <= attackRange * 1.2f)
+            {
+                player.GetComponent<HealthManager>().TakeDamage(attackDamage);
+            }
+            lastAttackTime = Time.time;
+        }
+    }
+
+    void OnDestroy()
+    {
+        if (EnemySquadManager.Instance != null)
+            EnemySquadManager.Instance.UnregisterEnemy(this);
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, detectionRange);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+
+        if (isCircling)
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(EnemySquadManager.Instance.GetCirclePosition(this), 0.5f);
+        }
+    }
+}
