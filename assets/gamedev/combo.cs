@@ -1,0 +1,150 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ComboAttack : MonoBehaviour
+{
+    public Animator animator;
+    public float comboResetTime = 1.2f;
+    public float cooldownTime = 0.5f;
+
+    public int comboIndex = 0;
+    private int comboStep = 0;
+    private float comboTimer = 0f;
+    private float cooldownTimer = 0f;
+    private bool isAttacking = false;
+    private bool hasQueuedNext = false;
+    private bool forceFinalAttack = false;
+
+    [Range(0f, 1f)]
+    public float comboTriggerThreshold = 0.7f;
+
+    public bool IsAttacking => isAttacking;
+
+    void Update()
+    {
+        if (cooldownTimer > 0f)
+            cooldownTimer -= Time.deltaTime;
+
+        if (comboTimer > 0f)
+            comboTimer -= Time.deltaTime;
+        else if (isAttacking)
+            ResetCombo();
+
+        // Right-click: Force Final Attack
+        if (Input.GetMouseButtonDown(1) && cooldownTimer <= 0f && !isAttacking)
+        {
+            ForceFinalCombo();
+        }
+
+        // Left-click: Standard Combo Chain
+        if (Input.GetMouseButtonDown(0) && cooldownTimer <= 0f && !forceFinalAttack)
+        {
+            if (!isAttacking)
+            {
+                StartCombo();
+            }
+            else if (comboStep < 3 && !hasQueuedNext)
+            {
+                // Check for current animation set based on comboIndex
+                string currentComboPrefix = comboIndex == 0 ? "VBCombo" : "VCCombo";
+                AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+                if (stateInfo.IsName($"{currentComboPrefix}{comboStep}"))
+                {
+                    if (stateInfo.normalizedTime >= comboTriggerThreshold)
+                    {
+                        ContinueCombo();
+                        hasQueuedNext = true;
+                    }
+                }
+            }
+        }
+
+        // Reset queue flag when state changes
+        if (isAttacking)
+        {
+            string currentComboPrefix = comboIndex == 0 ? "VBCombo" : "VCCombo";
+            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            if (!stateInfo.IsName($"{currentComboPrefix}{comboStep}") && !forceFinalAttack)
+            {
+                hasQueuedNext = false;
+            }
+        }
+    }
+
+    void StartCombo()
+    {
+        isAttacking = true;
+        comboStep = 1;
+        PlayComboAnimation(comboStep);
+        comboTimer = comboResetTime;
+    }
+
+    void ContinueCombo()
+    {
+        comboStep++;
+        PlayComboAnimation(comboStep);
+        comboTimer = comboResetTime;
+    }
+
+    void ForceFinalCombo()
+    {
+        isAttacking = true;
+        forceFinalAttack = true;
+        comboStep = 3;
+        cooldownTimer = cooldownTime; // ADDED COOLDOWN
+        comboTimer = comboResetTime;
+        PlayComboAnimation(3);
+    }
+
+    void PlayComboAnimation(int step)
+    {
+        string animName = comboIndex == 0 ? $"VBCombo{step}" : $"VCCombo{step}";
+        animator.CrossFade(animName, 0.1f);
+        
+    }
+
+    public void EndAttack()
+    {
+        ResetCombo();
+    }
+
+    void ResetCombo()
+    {
+        isAttacking = false;
+        comboStep = 0;
+        comboTimer = 0f;
+        cooldownTimer = cooldownTime;
+        hasQueuedNext = false;
+        forceFinalAttack = false;
+    }
+
+    public void TriggerUltimateCombo(int newComboIndex, float duration, AnimationClip activationAnim = null)
+    {
+        Debug.Log($"TriggerUltimateCombo called with comboIndex={newComboIndex}, duration={duration}");
+        StartCoroutine(ActivateUltimateCombo(newComboIndex, duration, activationAnim));
+    }
+
+    private IEnumerator ActivateUltimateCombo(int newComboIndex, float duration, AnimationClip activationAnim)
+    {
+        comboIndex = newComboIndex;
+
+        if (activationAnim != null)
+        {
+            animator.CrossFade(activationAnim.name, 0.1f);
+            Debug.Log($"Playing activation animation: {activationAnim.name}");
+            yield return new WaitForSeconds(activationAnim.length);
+        }
+
+
+        Debug.Log($"Ultimate Combo {newComboIndex} activated");
+        
+        ResetCombo();
+
+        yield return new WaitForSeconds(duration);
+
+        comboIndex = 0;
+        Debug.Log("Ultimate Combo expired, reverted to default");
+    }
+}
