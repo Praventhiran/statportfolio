@@ -440,6 +440,16 @@
       box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
     }
 
+    .game-screenshots video {
+      width: 100%;
+      height: 200px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+      object-fit: cover; /* Keeps aspect ratio */
+    }
+
+
+
     /* Modal for the Expanded Image */
     .modal {
       display: none;
@@ -550,7 +560,7 @@
     <div class="intro">
       <div class="text-container">
         <h1>PRAVENTHIRAN VRANGER</h1>
-        <h3>Game Designer | Game Programmer | Game Artist | MSUGDC President</h3>
+        <h3>Game Designer | Game Programmer | Game Artist | MSUGDC Founder | Human</h3>
         <p>
           I’m a passionate creator who might just play too many games, across every genre you can think of. I don’t just play, I analyze, design, and imagine what could be better. I have way too many hobbies and I love putting my feet into everything—from 3D modeling and animation to storytelling, AR, and game mechanics. If something sparks my curiosity, I dive headfirst. This portfolio is where all that passion and experimentation comes together.
         </p>
@@ -586,7 +596,7 @@
 
   <!-- Project Section -->
   <div class="project-section" id="projects">
-    <h2>PROJECT</h2>
+    <h2>PROJECTS</h2>
     <p class="project-description">
       This section showcases some of the most exciting and engaging projects I've worked on, from game development to side projects. Below, you'll find detailed descriptions of each project and its development process.
     </p>
@@ -630,8 +640,13 @@
     </div>
   </div>
 
+
+
+
+
   <!-- Gameplay Screenshots for 'Dimensions: The Lore Wars' -->
-  <div class="game-screenshots">
+  
+<div class="game-screenshots">
     <div class="game-screenshot">
       <img src="assets/gameplay1.png" alt="Gameplay 1" onclick="openModal(0)">
     </div>
@@ -644,7 +659,17 @@
     <div class="game-screenshot">
       <img src="assets/gameplay4.png" alt="Gameplay 4" onclick="openModal(3)">
     </div>
+<div class="game-screenshot">
+     <video controls>
+       <source src="assets/dimensions-trailer.mp4" type="video/mp4">
+       Your browser does not support the video tag.
+     </video>
+    </div>
   </div>
+
+
+
+
 
 
 
@@ -700,6 +725,9 @@
   </div>
 
 
+
+
+
  <!-- New Game Section: VanguardAR -->
 <div class="project-section-universal">
   <h2>Vanguard AR Experience</h2>
@@ -747,19 +775,202 @@
 
 
 
+<!-- New Game Section: AR Collectible Card System -->
+<div class="project-section-universal">
+  <h2>AR Collectible Card System</h2>
+  <p class="project-description">
+    A custom-designed multi-rarity collectible card system developed for <em>Dimensions: The Lore Wars</em>. 
+    These cards are more than visuals — they can be scanned via QR/AR to unlock in-game skills, stat boosts, 
+    and ultimate abilities. Designed with a modular system, the cards can also be traded, expanded, and integrated 
+    into future titles.
+  </p>
+</div>
+
+<!-- Specific Project for 'Card System' -->
+<div class="specific-project">	
+  <!-- Left side: Main Card Image -->
+  <div class="main-game-image" style="background-image: url('assets/cardshow-main.png');">
+    <!-- Showcase Image of the Cards -->
+  </div>
+
+  <!-- Right side: Card System Details -->
+  <div class="game-details">
+    <h3>System Features:</h3>
+    <ul>
+      <li>- Multi-rarity card design (Common, Rare, Legendary, Ultimate)</li>
+      <li>- AR scanning unlocks skills directly in-game</li>
+      <li>- Supports stat boosts, ultimate skills, and modular expansion</li>
+      <li>- Potential for trading and collection mechanics</li>
+      <li>- Designed in Photoshop & integrated with Unity + ARCore</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Gameplay Screenshots for 'Card System' -->
+<div class="game-screenshots">
+  <div class="game-screenshot">
+    <img src="assets/cardgmp1.png" alt="Card Rarities" onclick="openModal(12)">
+  </div>
+  <div class="game-screenshot">
+    <img src="assets/cardgmp2.png" alt="Card Scanning" onclick="openModal(13)">
+  </div>
+  <div class="game-screenshot">
+    <img src="assets/cardgmp3.jpg" alt="Card Trading Concept" onclick="openModal(14)">
+  </div>
+</div>
 
 
 
- <!-- Modal for the Expanded Image -->
+
+<!-- New Game Section: Interactive Portfolio -->
+<div class="project-section-universal">
+  <h2>Interactive Portfolio System</h2>
+  <p class="project-description">
+    This portfolio itself is a custom-built project showcasing my game development journey. 
+    Designed from scratch using HTML, CSS, and JavaScript, it features interactive cards, 
+    modal windows for code previews, and a smooth, scalable structure. 
+    The system is modular, making it easy to add new projects and features over time.
+  </p>
+</div>
+
+<!-- Specific Project for 'Interactive Portfolio' -->
+<div class="specific-project">
+  <!-- Left side: Main Screenshot -->
+  <div class="main-game-image" style="background-image: url('assets/portfolio-main.png');">
+    <!-- Showcase Image of Portfolio -->
+  </div>
+
+  <!-- Right side: Project Details -->
+  <div class="game-details">
+    <h3>System Features:</h3>
+    <ul>
+      <li>- Fully custom HTML, CSS, and JavaScript design</li>
+      <li>- Interactive card grid with hover animations</li>
+      <li>- Modal pop-ups for videos, images, and live code previews</li>
+      <li>- Modular system: new projects can be added with only 2 entries</li>
+      <li>- Optimized for readability, navigation, and recruiter focus</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Screenshots for 'Interactive Portfolio' -->
+<div class="game-screenshots">
+  <div class="game-screenshot">
+    <img src="assets/portfoliogmp1.png" alt="Portfolio Cards" onclick="openModal(30)">
+  </div>
+  <div class="game-screenshot">
+    <img src="assets/portfoliogmp2.png" alt="Portfolio Modal" onclick="openModal(31)">
+  </div>
+  <div class="game-screenshot">
+    <img src="assets/portfoliogmp3.png" alt="Portfolio Structure" onclick="openModal(32)">
+  </div>
+</div>
+
+
+
+<!-- New Game Section: Undisclosed Science STEM Project -->
+<div class="project-section-universal">
+  <h2>Undisclosed Science STEM Project</h2>
+  <p class="project-description">
+    This project explores advanced gameplay systems inspired by real-world science and physics. 
+    While the project remains confidential, the design process involved translating complex 
+    scientific principles into interactive mechanics, allowing players to experience concepts 
+    like energy transfer, particle behavior, and environmental simulation in a gamified format.
+  </p>
+</div>
+
+<!-- Specific Project for 'Undisclosed Project' -->
+<div class="specific-project">
+  <!-- Left side: Placeholder Main Image -->
+  <div class="main-game-image" style="background-image: url('assets/undisclosed-main.png');">
+    <!-- Confidential Project Placeholder -->
+  </div>
+
+  <!-- Right side: Core Scientific Systems -->
+  <div class="game-details">
+    <h3>Core Systems & Concepts:</h3>
+    <ul>
+      <li>- **Physics-driven interactions**: Gravity, momentum, and force calculations affecting gameplay</li>
+      <li>- **Energy mechanics**: Systems simulating kinetic, thermal, and potential energy transfer</li>
+      <li>- **Particle systems**: Behaviors based on real-world principles like diffusion and wave dynamics</li>
+      <li>- **Environmental simulation**: Weather, terrain, and fluid mechanics influencing player choices</li>
+      <li>- **Scientific accuracy + fun**: Simplified complex theories into accessible, engaging gameplay</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Conceptual Screenshots for 'Undisclosed Project' -->
+<div class="game-screenshots">
+  <div class="game-screenshot">
+    <img src="assets/undisclosed1.png" alt="Physics Simulation" onclick="openModal(40)">
+  </div>
+  <div class="game-screenshot">
+    <img src="assets/undisclosed2.png" alt="Particle Behaviors" onclick="openModal(41)">
+  </div>
+</div>
+
+
+
+
+<!-- New Game Section: Undisclosed Project -->
+<div class="project-section-universal">
+  <h2>Undisclosed Project</h2>
+  <p class="project-description">
+    This is a government-linked VR project (developed in collaboration with a YB) that focuses on 
+    preserving Malaysia’s cultural heritage. While specific details cannot be disclosed, the project 
+    involves building explorable VR environments of historical sites, allowing users to experience 
+    and learn about Malaysia’s past through immersive technology.
+  </p>
+</div>
+
+<!-- Specific Project for 'Undisclosed VR Heritage Project' -->
+<div class="specific-project">
+  <!-- Left side: Placeholder VR Image -->
+  <div class="main-game-image" style="background-image: url('assets/undisclosed-heritage.png');">
+    <!-- Confidential VR Heritage Placeholder -->
+  </div>
+
+  <!-- Right side: Core Contributions -->
+  <div class="game-details">
+    <h3>My Contributions:</h3>
+    <ul>
+      <li>- Designed and built **VR explorable environments** in Unity</li>
+      <li>- Focused on **authentic architectural recreation** of heritage sites</li>
+      <li>- Implemented **interactive exploration systems** for user immersion</li>
+      <li>- Optimized models for smooth performance in VR</li>
+      <li>- Ensured balance between **historical accuracy and user experience**</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Placeholder Screenshots -->
+<div class="game-screenshots">
+  <div class="game-screenshot">
+    <img src="assets/undisclosed-heritage1.png" alt="Heritage VR Concept" onclick="openModal(50)">
+  </div>
+  <div class="game-screenshot">
+    <img src="assets/undisclosed-heritage1.png" alt="Heritage Environment" onclick="openModal(51)">
+  </div>
+  <div class="game-screenshot">
+    <img src="assets/undisclosed-heritage1.png" alt="VR Exploration" onclick="openModal(52)">
+  </div>
+</div>
+
+	
+
+
+<!-- Modal for Expanded Media -->
 <div id="imageModal" class="modal" onclick="closeModal(event)">
   <div class="modal-content">
-    <img id="expandedImage" src="" alt="Expanded Game Image">
+    <img id="expandedImage" src="" alt="Expanded Game Image" style="display:none;">
+    <video id="expandedVideo" controls style="display:none; max-width:100%; max-height:80vh;"></video>
     <div class="modal-nav">
-      <button class="prev" onclick="changeImage(-1)">&#10094;</button>
-      <button class="next" onclick="changeImage(1)">&#10095;</button>
+      <button class="prev" onclick="changeMedia(-1)">&#10094;</button>
+      <button class="next" onclick="changeMedia(1)">&#10095;</button>
     </div>
   </div>
 </div>
+
 
 
 
@@ -840,52 +1051,67 @@
     drawRadarChart();
 
 
-     let currentImageIndex = 0;
-    const images = [
-      // Images for Dimensions: The Lore Wars
-      "assets/gameplay1.png",
-      "assets/gameplay2.png",
-      "assets/gameplay3.png",
-      "assets/gameplay4.png",
+let currentMediaIndex = 0;
+let currentRowMedia = []; // store clicked row's media (images + videos)
 
-      // Images for Pollutant
-      "assets/pollutant-pgameplay1.png",
-      "assets/pollutant-pgameplay2.png",
-      "assets/pollutant-pgameplay3.png",
-      "assets/pollutant-pgameplay4.png",
+// Attach click listeners to all rows
+document.querySelectorAll(".game-screenshots").forEach(row => {
+  const rowMedia = row.querySelectorAll("img, video");
 
-      // Images for VanguardAR
-      "assets/vgameplay1.png",
-      "assets/vgameplay2.png",
-      "assets/vgameplay3.png",
-      "assets/vgameplay4.png"
-    ];
+  rowMedia.forEach((media, index) => {
+    media.addEventListener("click", () => {
+      currentRowMedia = Array.from(rowMedia).map(m => {
+        return {
+          type: m.tagName.toLowerCase(), // "img" or "video"
+          src: m.tagName.toLowerCase() === "img" ? m.src : m.querySelector("source")?.src || m.src
+        };
+      });
+      currentMediaIndex = index;
+      openModal(currentRowMedia[currentMediaIndex]);
+    });
+  });
+});
 
-    function openModal(index) {
-      currentImageIndex = index;
-      document.getElementById('expandedImage').src = images[currentImageIndex];
-      document.getElementById('imageModal').style.display = "flex";
-    }
+function openModal(media) {
+  const modal = document.getElementById("imageModal");
+  const img = document.getElementById("expandedImage");
+  const vid = document.getElementById("expandedVideo");
 
-    // Function to close the modal when clicking outside the image (not the image itself)
-     function closeModal(event) {
-  // Check if the click is outside the image (background click)
-  if (event.target === document.getElementById('imageModal')) {
-    document.getElementById('imageModal').style.display = "none";
+  if (media.type === "img") {
+    img.src = media.src;
+    img.style.display = "block";
+    vid.style.display = "none";
+    vid.pause();
+  } else if (media.type === "video") {
+    vid.src = media.src;
+    vid.style.display = "block";
+    img.style.display = "none";
+    vid.play();
+  }
+
+  modal.style.display = "flex";
+}
+
+function closeModal(event) {
+  if (event.target === document.getElementById("imageModal")) {
+    document.getElementById("imageModal").style.display = "none";
+    document.getElementById("expandedVideo").pause();
   }
 }
 
-    function changeImage(direction) {
-      currentImageIndex += direction;
+function changeMedia(direction) {
+  if (!currentRowMedia.length) return;
 
-      if (currentImageIndex < 0) {
-        currentImageIndex = images.length - 1;
-      } else if (currentImageIndex >= images.length) {
-        currentImageIndex = 0;
-      }
+  currentMediaIndex += direction;
 
-      document.getElementById('expandedImage').src = images[currentImageIndex];
-    }
+  if (currentMediaIndex < 0) {
+    currentMediaIndex = currentRowMedia.length - 1;
+  } else if (currentMediaIndex >= currentRowMedia.length) {
+    currentMediaIndex = 0;
+  }
+
+  openModal(currentRowMedia[currentMediaIndex]);
+}
 
 
     // Get the button
