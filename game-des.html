@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Praventhiran VRanger Portfolio - Game Design</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0e0e0e;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* Navigation Bar */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 50px;
+      background-color: rgba(0, 0, 0, 0.6);
+      width: 100%;
+      z-index: 1000;
+      position: sticky;
+      top: 0;
+    }
+    .logo { display: flex; align-items: center; font-weight: bold; font-size: 1.2rem; color: red; }
+    .logo img { height: 40px; margin-right: 10px; }
+    nav ul { list-style: none; display: flex; gap: 20px; }
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      background-color: #1a1a1a;
+      padding: 10px 18px;
+      border-radius: 6px;
+      transition: background 0.3s;
+    }
+    nav ul li a:hover { background-color: #444; color: #00ff00; }
+
+    /* Back Home Button */
+    .back-home {
+      position: absolute;
+      top: 80px;
+      left: 20px;
+      z-index: 100;
+    }
+    .back-home a {
+      color: #00ff00;
+      text-decoration: none;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 8px 15px;
+      background-color: rgba(26, 26, 26, 0.7);
+      border-radius: 5px;
+      transition: all 0.3s;
+    }
+    .back-home a:hover { color: cyan; background-color: rgba(68, 68, 68, 0.7); }
+
+    /* Header */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 50vh;
+      position: relative;
+      text-align: center;
+      padding: 0 20px;
+    }
+    header .background {
+      background: url('assets/background.jpg') no-repeat center center/cover;
+      position: absolute; top: 0; left: 0; right: 0;
+      width: 100%; height: 100%; opacity: 0.2; z-index: -1;
+    }
+    header .content { position: relative; z-index: 10; max-width: 90%; }
+    header h1 { font-size: 3rem; margin-bottom: 15px; font-weight: bold; color: #00ff00; }
+    header .description { font-size: 1.2rem; margin: 0 auto; color: #ccc; max-width: 80%; }
+
+    /* Cards Section */
+    .cards-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+      padding: 0 20px 30px;
+      width: 100%;
+      max-width: 1800px;
+    }
+    .card {
+      background-color: #1a1a1a;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+      transition: transform 0.3s;
+      cursor: pointer;
+      text-align: center;
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:hover { transform: scale(1.05); }
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: contain;
+      border-radius: 5px;
+      background: #222;
+      margin-bottom: 15px;
+    }
+    .card h3 { font-size: 1.5rem; color: cyan; }
+    .card p { color: #ccc; font-size: 1.1rem; margin-top: 10px; }
+
+/* Simple Game Section Divider */
+.game-section-title {
+  font-size: 2rem;
+  color: #00eaff;
+  margin: 60px 0 15px;
+  text-align: left;
+  width: 100%;
+  max-width: 1800px;
+  border-left: 5px solid #00eaff;
+  padding-left: 15px;
+}
+
+
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+    }
+    .modal-content {
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 90%;
+      width: 80%;
+      max-height: 90%;
+      overflow-y: auto;
+      text-align: center;
+      position: relative;
+    }
+    .modal-content h2 { color: cyan; margin-bottom: 15px; }
+    .modal-content img {
+      max-width: 100%;
+      max-height: 70vh;
+      object-fit: contain;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      background: #222;
+    }
+    .modal-content p { font-size: 1.1rem; color: #ccc; line-height: 1.6; }
+    .close-btn {
+      position: absolute;
+      top: 20px; right: 30px;
+      font-size: 2rem;
+      cursor: pointer;
+      color: white;
+    }
+
+    /* Contact */
+    .contact {
+      max-width: 720px;
+      width: 100%;
+      padding: 2rem;
+      margin-top: 40px;
+      background: linear-gradient(135deg, #181818, #222222);
+      border-radius: 15px;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+      text-align: center;
+    }
+    .contact h2 { font-size: 2rem; margin-bottom: 1.5rem; color: cyan; font-weight: 700; }
+    .contact ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 1rem; }
+    .contact li { display: flex; justify-content: center; align-items: center; gap: 10px; }
+    .contact i { font-size: 1.4rem; color: #00ff00; }
+    .contact a { color: #ccc; font-size: 1.1rem; text-decoration: none; transition: color 0.3s; }
+    .contact a:hover { color: #00ff00; text-decoration: underline; }
+
+    /* Back to Top */
+    .back-to-top-btn {
+      position: fixed;
+      bottom: 20px; right: 20px;
+      background: rgba(0, 255, 0, 0.6);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      font-size: 18px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+    }
+    .back-to-top-btn:hover { background: rgba(0, 255, 0, 0.9); transform: scale(1.1); }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">
+      <img src="assets/logo.png" alt="Logo" />
+      Praventhiran / VRanger
+    </div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Back Home Button -->
+  <div class="back-home">
+    <a href="index.html"><i class="fas fa-arrow-left"></i> Back to Home</a>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="background"></div>
+    <div class="content">
+      <h1>Game Design</h1>
+      <p class="description">A showcase of my game design journey — from mechanics and systems to storytelling and world-building, blending creativity with technical design.</p>
+    </div>
+  </header>
+
+
+
+
+
+
+
+<!-- VRanger: Version Demo Section -->
+<h2 class="game-section-title">VRanger: Version Demo</h2>
+<p class="game-section-description">
+  An Unreal Engine remake of my Unity prototype, starting with an early concept demo 
+  that explores visuals, mechanics, and direction for future development.
+</p>
+
+<div class="cards-section">
+  <!-- Demo Concept Card -->
+  <div class="card" onclick="openModal('vranger-demo-concept')">
+    <img src="assets/gamedesign/concept-card.png" alt="VRanger Demo Concept">
+    <h3>Demo Concept</h3>
+    <p>Early idea phase for rebuilding VRanger in Unreal Engine.</p>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="modal-vranger-demo-concept" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal('vranger-demo-concept')">&times;</span>
+    <h2>VRanger: Version Demo - Concept</h2>
+    <img src="assets/gamedesign/concept-card.png" alt="VRanger Demo Concept">
+    <p>
+      The <em>VRanger: Version Demo</em> marks the beginning of my journey in Unreal Engine. 
+      This version focuses on exploring what a remake could look like — testing visuals, experimenting 
+      with Unreal’s Blueprint system, and setting the foundation for enhanced combat and AR integration 
+      in the future. It’s the initial planning stage, highlighting how the project might evolve beyond 
+      its Unity origins.
+    </p>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<!-- Game Section: Dimensions -->
+<h2 class="game-section-title">Dimensions: The Lore Wars</h2>
+<div class="cards-section">
+
+    <!-- Core Gameplay -->
+    <div class="card" onclick="openModal('core')">
+      <img src="assets/gamedesign/core-card.png" alt="Core Gameplay">
+      <h3>Core Gameplay</h3>
+      <p>Main gameplay loop involving mission selection, NPC scanning, and battles.</p>
+    </div>
+
+    <!-- Storyline -->
+    <div class="card" onclick="openModal('story')">
+      <img src="assets/gamedesign/story-card.png" alt="Storyline">
+      <h3>Storyline</h3>
+      <p>The narrative of VRanger traveling through dimensions to restore disrupted storylines.</p>
+    </div>
+
+    <!-- Map Flow -->
+    <div class="card" onclick="openModal('map')">
+      <img src="assets/gamedesign/map-card.png" alt="Map Flow">
+      <h3>Map Flow</h3>
+      <p>Visual design of battle maps, showing layouts, arenas, and player progression routes.</p>
+    </div>
+
+    <!-- Battle Gameplay -->
+    <div class="card" onclick="openModal('battle')">
+      <img src="assets/gamedesign/battle-card.png" alt="Battle Gameplay">
+      <h3>Battle Gameplay</h3>
+      <p>Combat encounter designs, enemy spawns, combo mechanics, and AR skill integration.</p>
+    </div>
+
+    <!-- Game Flow Order -->
+    <div class="card" onclick="openModal('flow')">
+      <img src="assets/gamedesign/flow-card.png" alt="Game Flow">
+      <h3>Game Flow Order</h3>
+      <p>Step-by-step flow: Start → NPC → Card Scan → Skill Unlock → Battle → Win/Loss.</p>
+    </div>
+<!-- Combo Flowchart -->
+<div class="card" onclick="openModal('comboflow')">
+  <img src="assets/gamedesign/comboflow-card.png" alt="Combo Flow">
+  <h3>Combo Flowchart</h3>
+  <p>Flowchart showing the decision-making process of the combo attack system.</p>
+</div>
+
+<!-- Attack Cooldown -->
+<div class="card" onclick="openModal('cooldown')">
+  <img src="assets/gamedesign/cooldown-card.png" alt="Attack Cooldown">
+  <h3>Attack Cooldown</h3>
+  <p>Sequence diagram showing how input is handled with cooldown checks.</p>
+</div>
+
+<!-- Skill Activation -->
+<div class="card" onclick="openModal('skillactivation')">
+  <img src="assets/gamedesign/skillactivation-card.png" alt="Skill Activation">
+  <h3>Skill Activation</h3>
+  <p>Sequence diagram showing how AR card scanning links to skill activation in battle.</p>
+</div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+<!-- Pollutant Section -->
+<h2 class="game-section-title">Pollutant</h2>
+<div class="cards-section">
+
+
+
+  <!-- Test Card -->
+  <div class="card" onclick="openModal('pollutant-core')">
+    <img src="assets/pollutant/core-card.png" alt="Pollutant Core">
+    <h3>Core Gameplay</h3>
+    <p>Players fight against spreading pollution while balancing survival and ecosystem health.</p>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="modal-pollutant-core" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal('pollutant-core')">&times;</span>
+    <h2>Pollutant - Core Gameplay</h2>
+    <img src="assets/pollutant/core.png" alt="Pollutant Core Gameplay">
+    <p>
+      <em>Pollutant</em> is a survival-environmental strategy game where pollution spreads dynamically across the world. 
+      Players must clean, protect, and rebuild while facing challenges such as resource scarcity, toxic hazards, and 
+      the ethical choice between industrial growth and ecological balance.
+    </p>
+  </div>
+</div>
+
+
+
+</div>
+
+
+  <!-- Modals -->
+  <div id="modal-core" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('core')">&times;</span>
+      <h2>Core Gameplay</h2>
+      <img src="assets/gamedesign/core-card.png" alt="Core Gameplay">
+      <p>The core gameplay of <em>Dimensions: The Lore Wars</em> revolves around AR-enhanced combat, mission-based progression, and skill acquisition through card scanning. This loop ensures variety and replayability.</p>
+    </div>
+  </div>
+
+  <div id="modal-story" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('story')">&times;</span>
+      <h2>Storyline</h2>
+      <img src="assets/gamedesign/story-card.png" alt="Storyline">
+      <p>The story follows VRanger as he journeys across fractured dimensions to fight the LoreBreakers. Each battle restores balance to corrupted storylines, blending narrative immersion with gameplay.</p>
+    </div>
+  </div>
+
+  <div id="modal-map" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('map')">&times;</span>
+      <h2>Map Flow</h2>
+      <img src="assets/gamedesign/map-card.png" alt="Map Flow">
+      <p>Battle maps are designed to be modular arenas. Each map features strategic obstacles, pathways, and enemy spawn points to enhance both challenge and pacing during encounters.</p>
+    </div>
+  </div>
+
+  <div id="modal-battle" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('battle')">&times;</span>
+      <h2>Battle Gameplay</h2>
+      <img src="assets/gamedesign/battle-card.png" alt="Battle Gameplay">
+      <p>Battle gameplay combines combo-based combat, AR-acquired ultimate skills, and enemy squad coordination. Encounters are paced to balance intensity and strategy.</p>
+    </div>
+  </div>
+
+  <div id="modal-flow" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('flow')">&times;</span>
+      <h2>Game Flow Order</h2>
+      <img src="assets/gamedesign/flow-card.png" alt="Game Flow Order">
+      <p>The structured flow: <strong>Start Menu → NPC Interaction → Card Scan → Skill Unlock → Battle → Win/Loss</strong>. This provides clarity for players and organizes the progression system.</p>
+    </div>
+  </div>
+
+<!-- Combo Flow Modal -->
+<div id="modal-comboflow" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal('comboflow')">&times;</span>
+    <h2>Combo Flowchart</h2>
+    <img src="assets/gamedesign/comboflow-card.png" alt="Combo Flow">
+    <p>This flowchart illustrates the logic behind combo execution — from input detection, to first-attack validation, combo continuation, and reset conditions.</p>
+  </div>
+</div>
+
+<!-- Attack Cooldown Modal -->
+<div id="modal-cooldown" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal('cooldown')">&times;</span>
+    <h2>Attack Cooldown</h2>
+    <img src="assets/gamedesign/cooldown-card.png" alt="Attack Cooldown">
+    <p>This sequence diagram shows how attack inputs are processed alongside cooldowns, ensuring fair pacing and preventing spamming.</p>
+  </div>
+</div>
+
+<!-- Skill Activation Modal -->
+<div id="modal-skillactivation" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal('skillactivation')">&times;</span>
+    <h2>Skill Activation</h2>
+    <img src="assets/gamedesign/skillactivation-card.png" alt="Skill Activation">
+    <p>This sequence diagram demonstrates how scanning a physical AR card integrates into the game’s skill system, triggering ultimate skills in combat.</p>
+  </div>
+</div>
+
+
+
+
+
+  <!-- Contact -->
+  <div class="contact" id="contact">
+    <h2>Connect with Me</h2>
+    <ul>
+      <li><i class="fab fa-instagram"></i> <a href="https://www.instagram.com/vranger621" target="_blank">vranger621</a></li>
+      <li><i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/praven-thiran-5674b6313/" target="_blank">linkedin.com/in/praven-thiran</a></li>
+      <li><i class="fas fa-envelope"></i> <a href="mailto:praventhiran621@gmail.com">praventhiran621@gmail.com</a></li>
+      <li><i class="fas fa-phone"></i> <a href="tel:+601137823496">+601137823496</a></li>
+    </ul>
+  </div>
+
+  <!-- Back to Top -->
+  <button id="backToTopBtn" class="back-to-top-btn" onclick="scrollToTop()">↑</button>
+
+<script>
+  function openModal(id) {
+    document.getElementById('modal-' + id).style.display = 'flex';
+  }
+  function closeModal(id) {
+    document.getElementById('modal-' + id).style.display = 'none';
+  }
+
+  // Close when clicking outside modal content
+  window.onclick = function(event) {
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(modal => {
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+  };
+
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  window.onscroll = function() {
+    let btn = document.getElementById("backToTopBtn");
+    btn.style.display = (document.documentElement.scrollTop > 100) ? "block" : "none";
+  };
+</script>
+
+</body>
+</html>
