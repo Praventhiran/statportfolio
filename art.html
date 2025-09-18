@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Praventhiran VRanger Portfolio - Art</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0e0e0e;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* Navbar */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 50px;
+      background-color: rgba(0, 0, 0, 0.6);
+      width: 100%;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .logo { display: flex; align-items: center; font-weight: bold; font-size: 1.2rem; color: red; }
+    .logo img { height: 40px; margin-right: 10px; }
+    nav ul { list-style: none; display: flex; gap: 20px; }
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      background-color: #1a1a1a;
+      padding: 10px 18px;
+      border-radius: 6px;
+      transition: background 0.3s;
+    }
+    nav ul li a:hover { background-color: #444; color: #00ff00; }
+
+    /* Back Home */
+    .back-home {
+      position: absolute;
+      top: 80px;
+      left: 20px;
+      z-index: 100;
+    }
+    .back-home a {
+      color: #00ff00;
+      text-decoration: none;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 8px 15px;
+      background-color: rgba(26, 26, 26, 0.7);
+      border-radius: 5px;
+      transition: all 0.3s;
+    }
+    .back-home a:hover { color: cyan; background-color: rgba(68, 68, 68, 0.7); }
+
+    /* Header */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 50vh;
+      text-align: center;
+      position: relative;
+    }
+    header .background {
+      background: url('assets/background.jpg') no-repeat center center/cover;
+      position: absolute; top: 0; left: 0; right: 0;
+      width: 100%; height: 100%; opacity: 0.2; z-index: -1;
+    }
+    header .content { z-index: 10; max-width: 90%; }
+    header h1 { font-size: 3rem; margin-bottom: 15px; font-weight: bold; color: #00ff00; }
+    header .description { font-size: 1.2rem; margin: 0 auto; color: #ccc; max-width: 80%; }
+
+    /* Gallery Grid */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 40px 20px;
+      max-width: 1400px;
+      width: 100%;
+    }
+    .gallery-item {
+      background: #1a1a1a;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0,255,255,0.3);
+      transition: transform 0.3s;
+      cursor: pointer;
+    }
+    .gallery-item:hover { transform: scale(1.05); }
+    .gallery-item img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      display: block;
+    }
+    .gallery-item p {
+      padding: 10px;
+      color: #ccc;
+      text-align: center;
+      font-size: 1rem;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+    }
+    .modal-content {
+      max-width: 90%;
+      max-height: 90%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    .modal-content img {
+      max-width: 100%;
+      max-height: 85vh;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+    .close-btn {
+      position: absolute;
+      top: 10px; right: 20px;
+      font-size: 2rem;
+      cursor: pointer;
+      color: white;
+    }
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 3rem;
+      color: white;
+      cursor: pointer;
+      user-select: none;
+      padding: 10px;
+      background: rgba(0,0,0,0.5);
+      border-radius: 50%;
+    }
+    .nav-btn.left { left: 20px; }
+    .nav-btn.right { right: 20px; }
+
+    /* Contact */
+    .contact {
+      max-width: 720px;
+      width: 100%;
+      padding: 2rem;
+      margin-top: 40px;
+      background: linear-gradient(135deg, #181818, #222222);
+      border-radius: 15px;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+      text-align: center;
+    }
+    .contact h2 { font-size: 2rem; margin-bottom: 1.5rem; color: cyan; font-weight: 700; }
+    .contact ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 1rem; }
+    .contact li { display: flex; justify-content: center; align-items: center; gap: 10px; }
+    .contact i { font-size: 1.4rem; color: #00ff00; }
+    .contact a { color: #ccc; font-size: 1.1rem; text-decoration: none; transition: color 0.3s; }
+    .contact a:hover { color: #00ff00; text-decoration: underline; }
+
+    /* Back to Top */
+    .back-to-top-btn {
+      position: fixed;
+      bottom: 20px; right: 20px;
+      background: rgba(0, 255, 0, 0.6);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      font-size: 18px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+    }
+    .back-to-top-btn:hover { background: rgba(0, 255, 0, 0.9); transform: scale(1.1); }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">
+      <img src="assets/logo.png" alt="Logo" />
+      Praventhiran / VRanger
+    </div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Back to Home -->
+  <div class="back-home">
+    <a href="index.html"><i class="fas fa-arrow-left"></i> Back to Home</a>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="background"></div>
+    <div class="content">
+      <h1>Art Portfolio</h1>
+      <p class="description">
+        A collection of my artwork — from concept sketches and full arts to promotional designs for games and beyond.
+      </p>
+    </div>
+  </header>
+
+
+
+
+
+  <!-- Gallery -->
+  <div class="gallery">
+
+
+
+    <div class="gallery-item" onclick="openModal('art1')">
+      <img src="assets/art/art1-thumb.jpg" alt="Art 1">
+      <p>VRanger Concept Art</p>
+    </div>
+
+    <div class="gallery-item" onclick="openModal('art2')">
+      <img src="assets/art/art2-thumb.jpg" alt="Art 2">
+      <p>Nyra NPC Concept Art</p>
+    </div>
+
+    <div class="gallery-item" onclick="openModal('art3')">
+      <img src="assets/art/art3-thumb.jpg" alt="Art 3">
+      <p>LegNo Monster Concept Art</p>
+    </div>
+
+    <div class="gallery-item" onclick="openModal('art4')">
+      <img src="assets/art/art4-thumb.png" alt="Art 4">
+      <p>Gozyuger Ulti Card Art</p>
+    </div>
+
+    <div class="gallery-item" onclick="openModal('art5')">
+      <img src="assets/art/art5-thumb.png" alt="Art 5">
+      <p>OnePiece Ulti Card Art</p>
+    </div>
+
+    <div class="gallery-item" onclick="openModal('art6')">
+      <img src="assets/art/art6-thumb.png" alt="Art 6">
+      <p>Stat Card Rarity Art</p>
+    </div>
+
+    <div class="gallery-item" onclick="openModal('art7')">
+      <img src="assets/art/art7-thumb.jpg" alt="Art 7">
+      <p>Dimensions Poster</p>
+    </div>
+
+    <div class="gallery-item" onclick="openModal('art8')">
+      <img src="assets/art/art8-thumb.png" alt="Art 8">
+      <p>Battle Map Concept Art</p>
+    </div>
+
+    <div class="gallery-item" onclick="openModal('art9')">
+      <img src="assets/art/art9-thumb.jpg" alt="Art 9">
+      <p>Dehya Design Study</p>
+    </div>
+
+    <div class="gallery-item" onclick="openModal('art10')">
+      <img src="assets/art/art10-thumb.jpg" alt="Art 10">
+      <p>HeatFrost Concept Art</p>
+    </div>
+
+    <div class="gallery-item" onclick="openModal('art11')">
+      <img src="assets/art/FinalLessonc1.jpg" alt="Art 11">
+      <p>Final Lesson Storyboard Practice</p>
+    </div>
+
+    <div class="gallery-item" onclick="openModal('art12')">
+      <img src="assets/art/SilatuStoryboard1.jpg" alt="Art 12">
+      <p>Silatu Storyboard</p>
+    </div>
+
+    <div class="gallery-item" onclick="openModal('art13')">
+      <img src="assets/art/art13-thumb.jpg" alt="Art 13">
+      <p>Xueyi Design Study WIP</p>
+    </div>
+
+    <div class="gallery-item" onclick="openModal('art14')">
+      <img src="assets/art/art14-thumb.jpg" alt="Art 14">
+      <p>Dehya Ehe Artwork</p>
+    </div>
+
+    <div class="gallery-item" onclick="openModal('art15')">
+      <img src="assets/art/art15-thumb.jpg" alt="Art 15">
+      <p>Zenkaiger Design Study</p>
+    </div>
+
+    <div class="gallery-item" onclick="openModal('art16')">
+      <img src="assets/art/art16-thumb.jpg" alt="Art 16">
+      <p>ChainsawBlaze Artwork</p>
+    </div>
+
+    <div class="gallery-item" onclick="openModal('art17')">
+      <img src="assets/art/art17-thumb.jpg" alt="Art 17">
+      <p>Kongo Kokyu Artwork</p>
+    </div>
+
+    <div class="gallery-item" onclick="openModal('art18')">
+      <img src="assets/art/art18-thumb.jpg" alt="Art 18">
+      <p>Everything Unleashed Artwork</p>
+    </div>
+
+    <div class="gallery-item" onclick="openModal('art19')">
+      <img src="assets/art/art19-thumb.jpg" alt="Art 19">
+      <p>Lahuma Artwork and Sketch</p>
+    </div>
+
+
+
+  </div>
+
+  <!-- Modal -->
+  <div id="art-modal" class="modal">
+    <span class="close-btn" onclick="closeModal()">&times;</span>
+    <span class="nav-btn left" onclick="prevImage()">&#10094;</span>
+    <div class="modal-content">
+      <img id="modal-image" src="" alt="Artwork">
+    </div>
+    <span class="nav-btn right" onclick="nextImage()">&#10095;</span>
+  </div>
+
+  <!-- Contact -->
+  <div class="contact" id="contact">
+    <h2>Connect with Me</h2>
+    <ul>
+      <li><i class="fab fa-instagram"></i> <a href="https://www.instagram.com/vranger621" target="_blank">vranger621</a></li>
+      <li><i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/praven-thiran-5674b6313/" target="_blank">linkedin.com/in/praven-thiran</a></li>
+      <li><i class="fas fa-envelope"></i> <a href="mailto:praventhiran621@gmail.com">praventhiran621@gmail.com</a></li>
+      <li><i class="fas fa-phone"></i> <a href="tel:+601137823496">+601137823496</a></li>
+    </ul>
+  </div>
+
+  <!-- Back to Top -->
+  <button id="backToTopBtn" class="back-to-top-btn" onclick="scrollToTop()">↑</button>
+
+  <script>
+    let currentGallery = [];
+    let currentIndex = 0;
+
+    const artImages = {
+      art1: ["assets/art/art1-thumb.jpg"],
+      art2: ["assets/art/art2-thumb.jpg"],
+      art3: ["assets/art/art3-thumb.jpg"],
+      art4: ["assets/art/art4-thumb.png", "assets/art/art4-1.png", "assets/art/art4-2.png"],
+      art5: ["assets/art/art5-thumb.png", "assets/art/art5-1.png", "assets/art/art5-2.png"],
+      art6: ["assets/art/art6-thumb.png", "assets/art/art6-1.png"],
+      art7: ["assets/art/art7-thumb.jpg"],
+      art8: ["assets/art/art8-thumb.png", "assets/art/art8-1.png", "assets/art/art8-2.png", "assets/art/art8-3.png"],
+      art9: ["assets/art/art9-thumb.jpg"],
+      art10: ["assets/art/art10-thumb.jpg", "assets/art/art10-1.jpg", "assets/art/art10-2.jpg"],
+      art11: ["assets/art/FinalLessonc1.jpg", "assets/art/FinalLessonc2.jpg", "assets/art/FinalLessonc3.jpg", "assets/art/FinalLessonc4.jpg", "assets/art/FinalLessonc5.jpg", "assets/art/FinalLessonc6.jpg", "assets/art/FinalLessonc7.jpg", "assets/art/FinalLessonc8.jpg", "assets/art/FinalLessonc9.jpg"],
+      art12: ["assets/art/SilatuStoryboard1.jpg", "assets/art/SilatuStoryboard2.jpg", "assets/art/SilatuStoryboard3.jpg", "assets/art/SilatuStoryboard4.jpg", "assets/art/SilatuStoryboard5.jpg", "assets/art/SilatuStoryboard6.jpg", "assets/art/SilatuStoryboard7.jpg", "assets/art/SilatuStoryboard8.jpg",],
+      art13: ["assets/art/art13-thumb.jpg"],
+      art14: ["assets/art/art14-thumb.jpg"],
+      art15: ["assets/art/art15-thumb.jpg", "assets/art/art15-1.jpg", "assets/art/art15-2.jpg"],
+      art16: ["assets/art/art16-thumb.jpg", "assets/art/art16-1.jpg" ],
+      art17: ["assets/art/art17-thumb.jpg"],
+      art18: ["assets/art/art18-thumb.jpg"],
+      art19: ["assets/art/art19-thumb.jpg", "assets/art/art19-1.jpg" ],
+
+    };
+
+function openModal(id) {
+  currentGallery = artImages[id] || [];
+  currentIndex = 0;
+  showImage();
+
+  // Show/hide nav buttons
+  document.querySelector(".nav-btn.left").style.display = 
+    currentGallery.length > 1 ? "block" : "none";
+  document.querySelector(".nav-btn.right").style.display = 
+    currentGallery.length > 1 ? "block" : "none";
+
+  document.getElementById("art-modal").style.display = "flex";
+}
+
+function closeModal() {
+  document.getElementById("art-modal").style.display = "none";
+}
+
+function showImage() {
+  if (currentGallery.length > 0) {
+    document.getElementById("modal-image").src = currentGallery[currentIndex];
+  }
+}
+
+function nextImage() {
+  if (currentGallery.length > 1) {
+    currentIndex = (currentIndex + 1) % currentGallery.length;
+    showImage();
+  }
+}
+
+function prevImage() {
+  if (currentGallery.length > 1) {
+    currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
+    showImage();
+  }
+}
+
+    // Close when clicking outside
+    window.onclick = function(event) {
+      const modal = document.getElementById("art-modal");
+      if (event.target === modal) {
+        closeModal();
+      }
+    };
+
+    // Scroll to top
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    window.onscroll = function() {
+      let btn = document.getElementById("backToTopBtn");
+      btn.style.display = (document.documentElement.scrollTop > 100) ? "block" : "none";
+    };
+  </script>
+
+</body>
+</html>
