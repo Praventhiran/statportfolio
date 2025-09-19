@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Praventhiran VRanger Portfolio - 3D Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0e0e0e;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* Navbar */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 50px;
+      background-color: rgba(0, 0, 0, 0.6);
+      width: 100%;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .logo { display: flex; align-items: center; font-weight: bold; font-size: 1.2rem; color: red; }
+    .logo img { height: 40px; margin-right: 10px; }
+    nav ul { list-style: none; display: flex; gap: 20px; }
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      background-color: #1a1a1a;
+      padding: 10px 18px;
+      border-radius: 6px;
+      transition: background 0.3s;
+    }
+    nav ul li a:hover { background-color: #444; color: #00ff00; }
+
+    /* Back Home */
+    .back-home {
+      position: absolute;
+      top: 80px;
+      left: 20px;
+      z-index: 100;
+    }
+    .back-home a {
+      color: #00ff00;
+      text-decoration: none;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 8px 15px;
+      background-color: rgba(26, 26, 26, 0.7);
+      border-radius: 5px;
+      transition: all 0.3s;
+    }
+    .back-home a:hover { color: cyan; background-color: rgba(68, 68, 68, 0.7); }
+
+    /* Header */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 50vh;
+      position: relative;
+      text-align: center;
+      padding: 0 20px;
+    }
+    header .background {
+      background: url('assets/background.jpg') no-repeat center center/cover;
+      position: absolute; top: 0; left: 0; right: 0;
+      width: 100%; height: 100%; opacity: 0.2; z-index: -1;
+    }
+    header .content { position: relative; z-index: 10; max-width: 90%; }
+    header h1 { font-size: 3rem; margin-bottom: 15px; font-weight: bold; color: #00ff00; }
+    header .description { font-size: 1.2rem; margin: 0 auto; color: #ccc; max-width: 80%; }
+
+    /* Cards Section */
+    .cards-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+      padding: 0 20px 30px;
+      width: 100%;
+      max-width: 1800px;
+    }
+    .card {
+      background-color: #1a1a1a;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+      transition: transform 0.3s;
+      cursor: pointer;
+      text-align: center;
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:hover { transform: scale(1.05); }
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: contain;
+      border-radius: 5px;
+      background: #222;
+      margin-bottom: 15px;
+    }
+    .card h3 { font-size: 1.5rem; color: cyan; }
+    .card p { color: #ccc; font-size: 1.1rem; margin-top: 10px; }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+    }
+  #modal-caption {
+    margin-top: 12px;
+    padding: 6px 12px;
+    background: rgba(0, 255, 255, 0.15);
+    color: cyan;
+    font-size: 1rem;
+    border-radius: 6px;
+    font-weight: 600;
+    text-align: center;
+  }
+    .modal-content {
+      max-width: 90%;
+      max-height: 90%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    .modal-content img {
+      max-width: 100%;
+      max-height: 85vh;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+    .close-btn {
+      position: absolute;
+      top: 10px; right: 20px;
+      font-size: 2rem;
+      cursor: pointer;
+      color: white;
+    }
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 3rem;
+      color: white;
+      cursor: pointer;
+      user-select: none;
+      padding: 10px;
+      background: rgba(0,0,0,0.5);
+      border-radius: 50%;
+    }
+    .nav-btn.left { left: 20px; }
+    .nav-btn.right { right: 20px; }
+
+    /* Contact */
+    .contact {
+      max-width: 720px;
+      width: 100%;
+      padding: 2rem;
+      margin-top: 40px;
+      background: linear-gradient(135deg, #181818, #222222);
+      border-radius: 15px;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+      text-align: center;
+    }
+    .contact h2 { font-size: 2rem; margin-bottom: 1.5rem; color: cyan; font-weight: 700; }
+    .contact ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 1rem; }
+    .contact li { display: flex; justify-content: center; align-items: center; gap: 10px; }
+    .contact i { font-size: 1.4rem; color: #00ff00; }
+    .contact a { color: #ccc; font-size: 1.1rem; text-decoration: none; transition: color 0.3s; }
+    .contact a:hover { color: #00ff00; text-decoration: underline; }
+
+    /* Back to Top */
+    .back-to-top-btn {
+      position: fixed;
+      bottom: 20px; right: 20px;
+      background: rgba(0, 255, 0, 0.6);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      font-size: 18px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+    }
+    .back-to-top-btn:hover { background: rgba(0, 255, 0, 0.9); transform: scale(1.1); }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">
+      <img src="assets/logo.png" alt="Logo" />
+      Praventhiran / VRanger
+    </div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Back to Home -->
+  <div class="back-home">
+    <a href="index.html"><i class="fas fa-arrow-left"></i> Back to Home</a>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="background"></div>
+    <div class="content">
+      <h1>3D Portfolio</h1>
+      <p class="description">A showcase of my 3D modeling, environment design, and visual experiments for games and interactive media.</p>
+    </div>
+  </header>
+
+
+
+
+
+
+
+  <!-- Cards -->
+  <div class="cards-section">
+    <!-- Example Card -->
+
+
+
+
+
+    <div class="card" onclick="openModal('model1')">
+      <img src="assets/3d/model1.png" alt="Model 1">
+      <h3>VRanger Model</h3>
+      <p>Inspired from techniques used in Zenless Zone Zero characters. Fully optimised mesh which has all details directly on the model itself</p>
+    </div>
+
+    <div class="card" onclick="openModal('model2')">
+      <img src="assets/3d/model2.png" alt="Model 2">
+      <h3>Nyra NPC Model</h3>
+      <p>First test in using Zenless Zero techniques. Simple wireframes which is enchanced with texture details.</p>
+    </div>
+
+    <div class="card" onclick="openModal('model3')">
+      <img src="assets/3d/model3.png" alt="Model 3">
+      <h3>LegNo Monster Model</h3>
+      <p>Footsoldier monster. A grotesque combination of Lego and jockey. Parts that doesnt belong to each other</p>
+    </div>
+
+    <div class="card" onclick="openModal('model4')">
+      <img src="assets/3d/model4.png" alt="Model 4">
+      <h3>LegNo Boss Model</h3>
+      <p>A bulky tank monster that combines with big lego parts. Combination looks more natural</p>
+    </div>
+
+    <div class="card" onclick="openModal('model5')">
+      <img src="assets/3d/model5.png" alt="Model 5">
+      <h3>SuperHero HQ Lobby</h3>
+      <p>Lobby area made for Dimensions. A futuristic design inspired by Men In Black</p>
+    </div>
+
+    <div class="card" onclick="openModal('model6')">
+      <img src="assets/3d/model6.png" alt="Model 6">
+      <h3>Dimensions Battle Map</h3>
+      <p>First stage area of Dimesnions. Abandoned construction site with multiple levels</p>
+    </div>
+
+    <div class="card" onclick="openModal('model7')">
+      <img src="assets/3d/model7.png" alt="Model 7">
+      <h3>Player's Room</h3>
+      <p>Modified to fit the characteristic of VRanger more. Objects that match the main character personality</p>
+    </div>
+
+
+
+  </div>
+
+
+<!-- Modal -->
+<div id="modal" class="modal">
+  <span class="close-btn" onclick="closeModal()">&times;</span>
+  <span class="nav-btn left" onclick="prevImage()">&#10094;</span>
+  <div class="modal-content">
+    <img id="modal-image" src="" alt="3D Work">
+    <span id="modal-caption"></span>
+  </div>
+  <span class="nav-btn right" onclick="nextImage()">&#10095;</span>
+</div>
+
+
+  <!-- Contact -->
+  <div class="contact" id="contact">
+    <h2>Connect with Me</h2>
+    <ul>
+      <li><i class="fab fa-instagram"></i> <a href="https://www.instagram.com/vranger621" target="_blank">vranger621</a></li>
+      <li><i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/praven-thiran-5674b6313/" target="_blank">linkedin.com/in/praven-thiran</a></li>
+      <li><i class="fas fa-envelope"></i> <a href="mailto:praventhiran621@gmail.com">praventhiran621@gmail.com</a></li>
+      <li><i class="fas fa-phone"></i> <a href="tel:+601137823496">+601137823496</a></li>
+    </ul>
+  </div>
+
+  <!-- Back to Top -->
+  <button id="backToTopBtn" class="back-to-top-btn" onclick="scrollToTop()">↑</button>
+
+  <script>
+  let currentGallery = [];
+  let currentIndex = 0;
+
+
+
+
+  // Each gallery entry has {src, label}
+const galleries = {
+  model1: [
+    { src: "assets/3d/model1.png", label: "3D Render" },
+   { src: "assets/3d/model1-1.png", label: "3D Render" },
+   { src: "assets/3d/model1-2.png", label: "3D Render" },
+    { src: "assets/3d/model1-3.png", label: "Wireframe Mesh" },
+    { src: "assets/3d/model1-4.png", label: "Wireframe Mesh" },
+    { src: "assets/3d/model1-5.png", label: "Wireframe Mesh" },
+    { src: "assets/3d/model1-6.png", label: "Wireframe Mesh" },
+    { src: "assets/3d/model1-7.png", label: "UV Layout" },
+    { src: "assets/3d/model1-8.png", label: "UV Layout" },
+    { src: "assets/3d/model1-9.png", label: "UV Layout" },
+  ],
+  model2: [
+    { src: "assets/3d/model2.png", label: "3D Render" },
+    { src: "assets/3d/model2-1.png", label: "3D Render" },
+    { src: "assets/3d/model2-2.png", label: "3D Render" },
+    { src: "assets/3d/model2-3.png", label: "Wireframe Mesh" },
+    { src: "assets/3d/model2-4.png", label: "Wireframe Mesh" },
+    { src: "assets/3d/model2-5.png", label: "Wireframe Mesh" },
+    { src: "assets/3d/model2-6.png", label: "Wireframe Mesh" },
+    { src: "assets/3d/model2-7.png", label: "UV Layout" },
+    { src: "assets/3d/model2-8.png", label: "UV Layout(Test)" },
+  ],
+  model3: [
+    { src: "assets/3d/model3.png", label: "3D Render" },
+    { src: "assets/3d/model3-1.png", label: "3D Render" },
+    { src: "assets/3d/model3-2.png", label: "3D Render" },
+    { src: "assets/3d/model3-3.png", label: "3D Render" },
+    { src: "assets/3d/model3-4.png", label: "Wireframe Mesh" },
+    { src: "assets/3d/model3-5.png", label: "Wireframe Mesh" },
+    { src: "assets/3d/model3-6.png", label: "UV Layout" },
+  ],
+  model4: [
+    { src: "assets/3d/model4.png", label: "3D Render" },
+    { src: "assets/3d/model4-1.png", label: "3D Render" },
+    { src: "assets/3d/model4-2.png", label: "3D Render" },
+    { src: "assets/3d/model4-3.png", label: "Wireframe Mesh" },
+    { src: "assets/3d/model4-4.png", label: "Wireframe Mesh" },
+    { src: "assets/3d/model4-5.png", label: "Wireframe Mesh" },
+    { src: "assets/3d/model4-6.png", label: "UV Layout" },
+  ],
+  model5: [
+    { src: "assets/3d/model5.png", label: "3D Render" },
+    { src: "assets/3d/model5-1.png", label: "3D Render" },
+    { src: "assets/3d/model5-2.png", label: "3D Render" },
+    { src: "assets/3d/model5-3.png", label: "3D Render" },
+    { src: "assets/3d/model5-4.png", label: "Map View" },
+  ],
+  model6: [
+    { src: "assets/3d/model6.png", label: "Level 1 Render" },
+    { src: "assets/3d/model6-1.png", label: "Level 1 Render" },
+    { src: "assets/3d/model6-2.png", label: "Level 2 Render" },
+    { src: "assets/3d/model6-3.png", label: "Level 2 Render" },
+    { src: "assets/3d/model6-4.png", label: "Level 3 Render" },
+    { src: "assets/3d/model6-5.png", label: "Level 3 Render" },
+    { src: "assets/3d/model6-6.png", label: "Level 4 Render" },
+    { src: "assets/3d/model6-7.png", label: "Level 4 Render" },
+    { src: "assets/3d/model6-8.png", label: "Map View" },
+  ],
+  model7: [
+    { src: "assets/3d/model7.png", label: "3D Render" },
+    { src: "assets/3d/model7-1.png", label: "3D Render" },
+    { src: "assets/3d/model7-2.png", label: "3D Render" },
+    { src: "assets/3d/model7-3.png", label: "3D Render" },
+  ],
+};
+
+
+
+
+  function openModal(id) {
+    currentGallery = galleries[id] || [];
+    currentIndex = 0;
+    showImage();
+
+    document.querySelector(".nav-btn.left").style.display = currentGallery.length > 1 ? "block" : "none";
+    document.querySelector(".nav-btn.right").style.display = currentGallery.length > 1 ? "block" : "none";
+
+    document.getElementById("modal").style.display = "flex";
+  }
+
+  function closeModal() {
+    document.getElementById("modal").style.display = "none";
+  }
+
+  function showImage() {
+    if (currentGallery.length > 0) {
+      document.getElementById("modal-image").src = currentGallery[currentIndex].src;
+      document.getElementById("modal-caption").textContent = currentGallery[currentIndex].label;
+    }
+  }
+
+  function nextImage() {
+    if (currentGallery.length > 1) {
+      currentIndex = (currentIndex + 1) % currentGallery.length;
+      showImage();
+    }
+  }
+
+  function prevImage() {
+    if (currentGallery.length > 1) {
+      currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
+      showImage();
+    }
+  }
+</script>
+
+</body>
+</html>
