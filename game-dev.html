@@ -864,7 +864,23 @@ document.addEventListener("keydown", function(e) {
     if (e.key === "ArrowRight") nextImage();
     if (e.key === "ArrowLeft") prevImage();
   }
+
+  // Close modal when clicking outside content
+window.addEventListener("click", function(event) {
+  const gameModal = document.getElementById("game-modal");
+  const imageViewer = document.getElementById("image-viewer");
+
+  // Close game modal
+  if (event.target === gameModal) {
+    closeModal();
+  }
+
+  // Close image viewer
+  if (event.target === imageViewer) {
+    closeImageViewer();
+  }
 });
+
 
 
 
