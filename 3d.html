@@ -440,6 +440,13 @@ const galleries = {
       showImage();
     }
   }
+
+  window.onclick = function(event) {
+    const modal = document.getElementById("modal");
+    if (event.target === modal) {
+      closeModal();
+    }
+  };
 </script>
 
 </body>
